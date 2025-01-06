@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name ="viewport" content="with=device-width, initial-scale=1.0">
+    <meta name ="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visualizing Math</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -9,19 +9,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-<body
+<body>
       <section class="header">
         <nav> 
             <a href="index.html"><img src="images/logo.png"></a>
             <div class="nav-links" id="navLinks">
                 <i class="fas fa-xmark" onclick="hideMenu()"></i>
                 <ul>
-                    <li><a href="">HOME</a></li>
-                    <li><a href="">ABOUT</a></li>
-                    <li><a href="">ALGEBRA 1</a></li>
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="about.html">ABOUT</a></li>
+                    <li><a href="">ALGEBRA</a></li>
                     <li><a href="">GEOMETRY</a></li>
-                    <li><a href="">ALGEBRA 2</a></li>
-                    <li><a href="">CONTACT</a></li>
                 </ul>
             </div>
             <i class="fas fa-bars" onclick="showMenu()"></i>
@@ -30,15 +28,32 @@
     <h1>Visualizing Math</h1>
     <p>Welcome to Visualizing Math – your go-to platform for understanding math through visual and interactive learning.
     </p>
-    <a href="" class="hero-btn">Visit Us To know More</a>
+    <a href="" class="hero-btn">Visit Us To Know More</a>
 </div>
 </section>
 
-<!-------- Algebra 1 -------->
-<section class="algebra1">
+<!-------- Welcome! -------->
+<section class="welcome">
+    <h1>Welcome to Visualizing Math</h1>
+    <p>Unlock the power of mathematics with engaging, easy-to-understand resources designed for visual learners. Our mission is to make math approachable, enjoyable, and accessible for everyone. Whether you're exploring Algebra or diving into Geometry, you'll find clear explanations, step-by-step guides, and interactive videos tailored to help you succeed.</p>
+    
+    <div class="row">
+        <div class="course-col">
+            <h2>Algebra</h2>
+            <p>Master foundational concepts and build confidence in algebraic problem-solving. Our videos and resources cover key topics in Algebra, complete with clear explanations and visual aids tailored for every type of learner.</p>
+        </div>
+        <div class="course-col">
+            <h2>Geometry</h2>
+            <p>Explore the beauty of shapes, angles, and logical reasoning in this section. Our visual resources make understanding Geometry concepts more intuitive and engaging, whether you're working on proofs or applying formulas.</p>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    </section>
 
-</section>
-
+    
 <!--------JavaScript for Toggle Menu-------->
 <script>
     var navLinks = document.getElementById("navLinks");
