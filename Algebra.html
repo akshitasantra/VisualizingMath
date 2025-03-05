@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name ="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizing Math</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+      <section class="sub-header">
+        <nav> 
+            <a href="index.html"><img src="images/logo.png"></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fas fa-xmark" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="about.html">ABOUT</a></li>
+                    <li><a href="Login.html">LOG IN</a></li>
+                    <li><a href="SignUp.html">SIGN UP</a></li>
+                    <li><a href="Algebra.html">ALGEBRA</a></li>
+                    <li><a href="">GEOMETRY</a></li>
+                </ul>
+            </div>
+            <i class="fas fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <h1>Algebra</h1>
+</section>
+<div class="content">
+<div class="legend">
+    <div class="legend-item"><div class="icon" style="background: red;"></div> Incorrect</div>
+    <div class="legend-item"><div class="icon" style="background: green;"></div> Correct</div>
+    <div class="legend-item"><div class="icon"></div> Not Attempted</div>
+</div>
+<div class="unit-container">
+    <div class="unit">
+        <a href="Algebra/understanding_polynomials.html">Understanding Polynomials</a>
+        <div class="question-icons">
+            <div class="icon"><div class="popup"><img src="images/q1.png" width="100%"><a href="q1.html">Go to Question</a></div></div>
+            <div class="icon"><div class="popup"><img src="images/q1.png" width="100%"><a href="q1.html">Go to Question</a></div></div>
+            <div class="icon"><div class="popup"><img src="images/q1.png" width="100%"><a href="q1.html">Go to Question</a></div></div>
+            <div class="icon"><div class="popup"><img src="images/q1.png" width="100%"><a href="q1.html">Go to Question</a></div></div>
+            <div class="icon"><div class="popup"><img src="images/q1.png" width="100%"><a href="q1.html">Go to Question</a></div></div>
+            <div class="icon"><div class="popup"><img src="images/q1.png" width="100%"><a href="q1.html">Go to Question</a></div></div>
+        </div>
+        <div class="separator"></div>
+        <a href="Algebra/factoring_polynomials.html">Factoring Polynomials</a>
+        <div class="question-icons">
+            <div class="icon"><div class="popup"><img src="images/q1.png" width="100%"><a href="q1.html">Go to Question</a></div></div>
+            <div class="icon"><div class="popup"><img src="images/q1.png" width="100%"><a href="q1.html">Go to Question</a></div></div>
+            <div class="icon"><div class="popup"><img src="images/q1.png" width="100%"><a href="q1.html">Go to Question</a></div></div>
+            <div class="icon"><div class="popup"><img src="images/q1.png" width="100%"><a href="q1.html">Go to Question</a></div></div>
+            <div class="icon"><div class="popup"><img src="images/q1.png" width="100%"><a href="q1.html">Go to Question</a></div></div>
+            <div class="icon"><div class="popup"><img src="images/q1.png" width="100%"><a href="q1.html">Go to Question</a></div></div>
+        </div>
+    </div>
+</div>
+<div class="main-container">
+    <div class="sidebar">
+        <h2>Algebra Units</h2>
+        <ul>
+            <li><a href="Algebra/understanding_polynomials.html">Understanding Polynomials</a></li>
+            <li><a href="Algebra/factoring_polynomials.html">Factoring Polynomials</a></li>
+            <li><a href="Algebra/multiplying_polynomials.html">Multiplying Polynomials</a></li>
+            <li><a href="Algebra/dividing_polynomials.html">Dividing Polynomials</a></li>
+            <li><a href="Algebra/distributive_property.html">Distributive Property</a></li>
+            <li><a href="Algebra/difference_of_squares.html">Difference of Squares</a></li>
+            <li><a href="Algebra/simplifying_radicals.html">Simplifying Radicals</a></li>
+        </ul>
+    </div>
+</div>
+
+    
+<!--------JavaScript for Toggle Menu-------->
+<script>
+    var navLinks = document.getElementById("navLinks");
+    function showMenu(){
+        navLinks.style.right = "0";
+    }
+    function hideMenu(){
+        navLinks.style.right = "-200px";
+    }
+</script>
+</body>
+</html>
