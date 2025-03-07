@@ -29,24 +29,14 @@
             </div>
             <i class="fas fa-bars" onclick="showMenu()"></i>
         </nav>
-        <h1>Sign Up</h1>
+        <h1>Log In</h1>
     </section>
 
     <div class="wrapper">
         <div class="form-box">
             <div class="register-container" id="register">
                 <div class="top">
-                    <span>Have an account? <a href="Login.html">Login</a></span>
-                </div>
-                <div class="two-forms">
-                    <div class="input-box">
-                        <input type="text" id="firstname" class="input-field" placeholder="Firstname">
-                        <i class="bx bx-user"></i>
-                    </div>
-                    <div class="input-box">
-                        <input type="text" id="lastname" class="input-field" placeholder="Lastname">
-                        <i class="bx bx-user"></i>
-                    </div>
+                    <span>Don't have an account? <a href="SignUp.html">Sign Up</a></span>
                 </div>
                 <div class="input-box">
                     <input type="email" id="email" class="input-field" placeholder="Email">
@@ -57,12 +47,15 @@
                     <i class="bx bx-lock-alt"></i>
                 </div>
                 <div class="input-box">
-                    <input type="submit" id="submit" class="submit" value="Register">
+                    <input type="submit" id="submit" class="submit" value="Sign In">
                 </div>
                 <div class="two-col">
                     <div class="one">
-                        <input type="checkbox" id="register-check">
-                        <label for="register-check"> Remember Me</label>
+                        <input type="checkbox" id="login-check">
+                        <label for="login-check"> Remember Me</label>
+                    </div>
+                    <div class="two">
+                        <label><a href="forgot-password.html"> Forgot password?</a></label>
                     </div>
                 </div>
             </div>
@@ -85,17 +78,15 @@
             e.preventDefault(); // Prevent the form from refreshing the page
 
             // Get the form data
-            const firstname = document.getElementById('firstname').value;
-            const lastname = document.getElementById('lastname').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
             // Create the data object
-            const data = { firstname, lastname, email, password };
+            const data = { email, password };
 
-            // Send data to the backend (POST request to /signup)
+            // Send data to the backend (POST request to /login)
             try {
-                const response = await fetch('http://localhost:5000/signup', {
+                const response = await fetch('http://localhost:5000/login', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -106,8 +97,8 @@
                 const result = await response.json();
                 if (response.ok) {
                     alert(result.message); // Show success message
-                    // Redirect to login or another page
-                    window.location.href = 'Login.html';
+                    // Redirect to a different page after successful login
+                    window.location.href = 'Algebra.html'; // Redirect to a dashboard or home page
                 } else {
                     alert(result.message); // Show error message
                 }
