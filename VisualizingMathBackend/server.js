@@ -7,6 +7,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const app = express();
 const sgMail = require('@sendgrid/mail');
+const cookieParser = require('cookie-parser');
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -50,8 +51,8 @@ app.post('/signup', async (req, res) => {
 // Sample route for login
 app.post('/login', async (req, res) => {
     try {
-        const { email, password } = req.body;
-        console.log('Received login credentials:', { email, password });
+        const { email, password, rememberMe } = req.body;
+        console.log('Received login credentials:', { email, password, rememberMe });
 
         // Find the user by email
         const user = await User.findOne({ email });
@@ -61,23 +62,27 @@ app.post('/login', async (req, res) => {
 
         // Compare the entered password with the stored hashed password
         const isPasswordMatch = await bcrypt.compare(password, user.password);
-
         if (!isPasswordMatch) {
             return res.status(400).json({ message: 'Invalid email or password' });
         }
 
-        // If passwords match, generate a JWT token (optional)
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        // Set token expiration based on "Remember Me"
+        const tokenExpiration = rememberMe ? '7d' : '1h'; // If "Remember Me" is checked, keep the session for 7 days
+
+        // Generate JWT token
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: tokenExpiration });
 
         return res.status(200).json({
             message: 'Login successful',
-            token, // You can return the token if you are using it for authentication
+            token,
+            rememberMe,
         });
     } catch (error) {
         console.error('Login error:', error);
         res.status(500).json({ message: '❌ Server error', error });
     }
 });
+
 
 
 // Forgot Password Route
