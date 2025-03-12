@@ -18,8 +18,9 @@
                 <ul>
                     <li><a href="index.html">HOME</a></li>
                     <li><a href="about.html">ABOUT</a></li>
-                    <li><a href="Login.html">LOG IN</a></li>
                     <li><a href="SignUp.html">SIGN UP</a></li>
+                    <li id="login-nav"><a href="Login.html">LOG IN</a></li>
+                    <li id="logout-nav" style="display: none;"><a href="#" onclick="logout()">LOG OUT</a></li>
                     <li><a href="Algebra.html">ALGEBRA</a></li>
                     <li><a href="">GEOMETRY</a></li>
                 </ul>
@@ -34,7 +35,7 @@
         <div class="about-col">
         <h1>Who Are We?</h1>
             <p>Our team is comprised of passionate members from the <b>Society of Women Engineers (SWE) at the University of Texas at Austin</b>, each dedicated to empowering students through free, high-quality educational resources. We are driven by a shared commitment to improving STEM education and making a positive impact on the learning experiences of middle and high school students.</p>
-            <a href="" class="hero-btn purple-btn">EXPLORE NOW</a>
+            <a href="SignUp.html" class="hero-btn purple-btn">SIGN UP</a>
         </div>
         <div class="about-col">
         <img src="images/about.jpg">
@@ -52,5 +53,24 @@
         navLinks.style.right = "-200px";
     }
 </script>
+<script>
+    // Check login status on page load
+    document.addEventListener("DOMContentLoaded", () => {
+        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+        if (token) {
+            document.getElementById("login-nav").style.display = "none";
+            document.getElementById("logout-nav").style.display = "inline-block";
+        }
+    });
+
+    // Logout function
+    function logout() {
+        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
+        alert("You have been logged out.");
+        window.location.href = 'Login.html'; // Redirect to Login page
+    }
+</script>
+
 </body>
 </html>

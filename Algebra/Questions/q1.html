@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name ="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizing Math</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <!-- Header Section -->
+    <section class="sub-header">
+        <nav> 
+            <a href="index.html"><img src="../images/logo.png" alt="Logo"></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fas fa-xmark" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="../../index.html">HOME</a></li>
+                    <li><a href="../../about.html">ABOUT</a></li>
+                    <li><a href="../../SignUp.html">SIGN UP</a></li>
+                    <li><a href="../../Login.html">LOG IN</a></li>
+                    <li><a href="../../Algebra.html">ALGEBRA</a></li>
+                    <li><a href="">GEOMETRY</a></li>
+                </ul>
+            </div>
+            <i class="fas fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <h1>Question 1: Identifying Types of Polynomials</h1>
+    </section>
+    
+    <!-- Back Link Section -->
+    <section class="back-link">
+        <a href="../understanding_polynomials.html">&larr; Back to Understanding Polynomials</a>
+    </section>
+    
+    <!-- Interactive Question Section -->
+    <section class="question-section">
+        <h2>Question 1: What is a Polynomial?</h2>
+        <p>Select the correct answer:</p>
+        <form id="questionForm">
+            <input type="radio" name="answer" id="answer1" value="A">
+            <label for="answer1">
+                A) An expression consisting of constants and variables involving addition, subtraction, multiplication, and exponentiation.
+            </label>
+            
+            <input type="radio" name="answer" id="answer2" value="B">
+            <label for="answer2">
+                B) A formula to calculate the area of a circle.
+            </label>
+            
+            <input type="radio" name="answer" id="answer3" value="C">
+            <label for="answer3">
+                C) A sequence of numbers with a specific pattern.
+            </label>
+            
+            <input type="radio" name="answer" id="answer4" value="D">
+            <label for="answer4">
+                D) A geometric shape with three sides.
+            </label>
+            
+            <button type="button" onclick="checkAnswer()">Submit Answer</button>
+        </form>
+        <div id="feedback"></div>
+        <!-- Next Button (Initially Hidden) -->
+        <a id="button" href="q2.html" style="display: none;">
+            <button>Next Question →</button>
+        </a>
+    </section>
+    
+    <!-- JavaScript for Toggle Menu and Question Interaction -->
+    <script>
+        var navLinks = document.getElementById("navLinks");
+        function showMenu(){
+            navLinks.style.right = "0";
+        }
+        function hideMenu(){
+            navLinks.style.right = "-200px";
+        }
+        
+        function checkAnswer() {
+            var form = document.getElementById('questionForm');
+            var feedback = document.getElementById('feedback');
+            var selected = form.answer.value;
+            var nextButton = document.getElementById('button');
+            
+            if (!selected) {
+                feedback.innerHTML = "<p style='color:red;'>Please select an answer before submitting.</p>";
+                return;
+            }
+            
+            if(selected === "A") {
+                feedback.innerHTML = "<p style='color:green;'>Correct! A polynomial is an expression consisting of constants and variables combined using operations such as addition, subtraction, multiplication, and exponentiation.</p>";
+                // Set a flag so other pages can update the icon to green
+                localStorage.setItem("q1Correct", "true");
+                nextButton.style.display = "inline-block";
+            } else {
+                localStorage.setItem("q1Correct", "false");
+                feedback.innerHTML = "<p style='color:red;'>Incorrect. Please try again.</p>";
+                feedback.innerHTML = "<p style='color:red;'>Incorrect. Please try again.</p>";
+            }
+        }
+        document.addEventListener("DOMContentLoaded", function() {
+            var q1Status = localStorage.getItem("q1Correct");
+
+            if (q1Status === "true") {
+                var q1Icon = document.querySelector(".question-button .icon");
+                if (q1Icon) {
+                    q1Icon.classList.add("completed");
+                }
+            } else if (q1Status === "false") {
+                var q1Icon = document.querySelector(".question-button .icon");
+                if (q1Icon) {
+                    q1Icon.classList.add("incorrect");
+                }
+            }
+        });
+            document.getElementById("questionForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            var selectedAnswer = document.querySelector('input[name="answer"]:checked');
+
+            if (!selectedAnswer) {
+                alert("Please select an answer!");
+                return;
+            }
+
+            var isCorrect = selectedAnswer.value === "A"; // Adjust based on correct answer
+            localStorage.setItem("q1Correct", isCorrect ? "true" : "false");
+
+            var resultMessage = document.createElement("p");
+            resultMessage.textContent = isCorrect ? "Correct!" : "Incorrect. Try again!";
+            resultMessage.style.color = isCorrect ? "green" : "red";
+
+            document.getElementById("questionForm").appendChild(resultMessage);
+        });
+
+
+    </script>
+    <script>
+    // Check login status on page load
+    document.addEventListener("DOMContentLoaded", () => {
+        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+        if (token) {
+            document.getElementById("login-nav").style.display = "none";
+            document.getElementById("logout-nav").style.display = "inline-block";
+        }
+    });
+
+    // Logout function
+    function logout() {
+        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
+        alert("You have been logged out.");
+        window.location.href = 'Login.html'; // Redirect to Login page
+    }
+</script>
+
+</body>
+</html>
