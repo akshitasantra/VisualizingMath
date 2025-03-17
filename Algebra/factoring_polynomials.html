@@ -19,25 +19,103 @@
                     <li><a href="../index.html">HOME</a></li>
                     <li><a href="../about.html">ABOUT</a></li>
                     <li><a href="../SignUp.html">SIGN UP</a></li>
-                    <li><a href="../Login.html">LOG IN</a></li>
+                    <li id="login-nav"><a href="../Login.html">LOG IN</a></li>
+                    <li id="logout-nav" style="display: none;"><a href="#" onclick="logout()">LOG OUT</a></li>
                     <li><a href="../Algebra.html">ALGEBRA</a></li>
                     <li><a href="">GEOMETRY</a></li>
                 </ul>
             </div>
             <i class="fas fa-bars" onclick="showMenu()"></i>
         </nav>
-        <h1>About Us</h1>
+        <h1>Factoring Polynomials</h1>
 </section>
-<!-----About Us Content----->
-<section class="about-us">
-    <div class="row">
-        <div class="about-col">
-        <h1>Who Are We?</h1>
-            <p>Our team is comprised of passionate members from the <b>Society of Women Engineers (SWE) at the University of Texas at Austin</b>, each dedicated to empowering students through free, high-quality educational resources. We are driven by a shared commitment to improving STEM education and making a positive impact on the learning experiences of middle and high school students.</p>
-            <a href="" class="hero-btn purple-btn">EXPLORE NOW</a>
-        </div>
-        <div class="about-col">
-        <img src="../images/about.jpg">
+<!----- Understanding Polynomials Content ----->
+<section class="content">
+    <div class="container">
+        <h2>Introduction to Factoring Polynomials</h2>
+            <p>Factoring is the process of breaking down a polynomial into simpler expressions that, when multiplied together, give the original polynomial. Factoring helps in solving polynomial equations and simplifying expressions.</p>
+            
+            <h2>Common Factoring Techniques</h2>
+            <h3>1. Finding the Greatest Common Factor (GCF)</h3>
+            <p>The GCF is the largest factor that divides each term in the polynomial. To factor using the GCF:</p>
+            <ul>
+                <li>Identify the GCF of all terms.</li>
+                <li>Factor out the GCF from each term.</li>
+            </ul>
+            <p><b>Example:</b> Factor 6x² + 9x.<br>
+            GCF: 3x → 3x(2x + 3)</p>
+            
+            <h3>2. Factoring by Grouping</h3>
+            <p>Used when a polynomial has four terms. Steps include:</p>
+            <ul>
+                <li>Group terms into two pairs.</li>
+                <li>Factor out the common factor in each group.</li>
+                <li>Factor out the common binomial.</li>
+            </ul>
+            <p><b>Example:</b> Factor x³ + 3x² + 2x + 6.<br>
+            Grouping: (x³ + 3x²) + (2x + 6)<br>
+            Factor: x²(x + 3) + 2(x + 3)<br>
+            Final Factorization: (x² + 2)(x + 3)</p>
+            
+            <h3>3. Factoring Trinomials</h3>
+            <p>Trinomials in the form of ax² + bx + c can be factored by finding two numbers that multiply to ac and sum to b.</p>
+            <p><b>Example:</b> Factor x² + 5x + 6.<br>
+            Find two numbers that multiply to 6 and add to 5 (2 and 3).<br>
+            Factor: (x + 2)(x + 3)</p>
+            
+            <h3>4. Factoring the Difference of Squares</h3>
+            <p>If a polynomial is in the form a² - b², it factors into (a - b)(a + b).</p>
+            <p><b>Example:</b> Factor x² - 16.<br>
+            Recognize as (x)² - (4)².<br>
+            Factor: (x - 4)(x + 4)</p>
+        <!-- Interactive Question Links with Integrated Icons -->
+        <div class="centered-content">    
+        <h2>Test Your Knowledge</h2>
+      <p>Click on the buttons below to try out interactive questions based on the content you've learned:</p>
+      <ul class="question-links">
+        <li>
+          <a href="Questions/q7.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 1: Identifying Common Factors</span>
+          </a>
+        </li>
+        <li>
+          <a href="Questions/q8.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 2: Factoring by Grouping</span>
+          </a>
+        </li>
+        <li>
+          <a href="Questions/q9.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 3: Factoring Trinomials</span>
+          </a>
+        </li>
+        <li>
+          <a href="Questions/q10.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 4: Difference of Squares</span>
+          </a>
+        </li>
+        <li>
+          <a href="Questions/q11.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 5: Perfect Square Trinomials</span>
+          </a>
+        </li>
+        <li>
+          <a href="Questions/q12.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 6: Factoring a Cubic Polynomial</span>
+          </a>
+        </li>
+      </ul>
         </div>
     </div>
 </section>
@@ -52,5 +130,45 @@
         navLinks.style.right = "-200px";
     }
 </script>
+<!--------JavaScript for Saving Progress-------->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Select all question icons within the list
+    const questionLinks = document.querySelectorAll(".question-links li");
+
+    questionLinks.forEach((question, index) => {
+        const questionId = `q${index + 7}Correct`; // Matches localStorage key like "q1Correct"
+        const status = localStorage.getItem(questionId);
+        const icon = question.querySelector(".icon");
+
+        if (icon) {
+            if (status === "true") {
+                icon.classList.add("completed");
+            } else if (status === "false") {
+                icon.classList.add("incorrect");
+            }
+        }
+    });
+});
+</script>
+<script>
+    // Check login status on page load
+    document.addEventListener("DOMContentLoaded", () => {
+        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+        if (token) {
+            document.getElementById("login-nav").style.display = "none";
+            document.getElementById("logout-nav").style.display = "inline-block";
+        }
+    });
+
+    // Logout function
+    function logout() {
+        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
+        alert("You have been logged out.");
+        window.location.href = 'Login.html'; // Redirect to Login page
+    }
+</script>
+
 </body>
 </html>

@@ -19,25 +19,96 @@
                     <li><a href="../index.html">HOME</a></li>
                     <li><a href="../about.html">ABOUT</a></li>
                     <li><a href="../SignUp.html">SIGN UP</a></li>
-                    <li><a href="../Login.html">LOG IN</a></li>
+                    <li id="login-nav"><a href="../Login.html">LOG IN</a></li>
+                    <li id="logout-nav" style="display: none;"><a href="#" onclick="logout()">LOG OUT</a></li>
                     <li><a href="../Algebra.html">ALGEBRA</a></li>
                     <li><a href="">GEOMETRY</a></li>
                 </ul>
             </div>
             <i class="fas fa-bars" onclick="showMenu()"></i>
         </nav>
-        <h1>About Us</h1>
+        <h1>Multiplying Polynomials</h1>
 </section>
-<!-----About Us Content----->
-<section class="about-us">
-    <div class="row">
-        <div class="about-col">
-        <h1>Who Are We?</h1>
-            <p>Our team is comprised of passionate members from the <b>Society of Women Engineers (SWE) at the University of Texas at Austin</b>, each dedicated to empowering students through free, high-quality educational resources. We are driven by a shared commitment to improving STEM education and making a positive impact on the learning experiences of middle and high school students.</p>
-            <a href="" class="hero-btn purple-btn">EXPLORE NOW</a>
-        </div>
-        <div class="about-col">
-        <img src="../images/about.jpg">
+<!----- Understanding Polynomials Content ----->
+<section class="content">
+    <div class="container">
+        <h2>How to Multiply Polynomials</h2>
+            <p>Multiplying polynomials involves multiplying each term of one polynomial by each term of the other polynomial, then combining like terms when necessary.</p>
+            <ol>
+                <li>Distribute each term in the first polynomial to every term in the second polynomial.</li>
+                <li>Simplify the expression by combining like terms.</li>
+                <li>If applicable, factor out the greatest common factor among all terms to simplify the polynomial.</li>
+            </ol>
+            <p><b>Tip:</b> Pay close attention to positive and negative signs when distributing, especially when negative polynomials are involved.</p>
+            
+            <h2>Guided Examples</h2>
+            <h3>Example 1: Multiply (2x - 6)(x + 3)</h3>
+            <p>Use the FOIL method.</p>
+            <img src="../images/foil_example1.png" alt="FOIL method example 1">
+            <p>Combine like terms.</p>
+            <img src="../images/foil_example1_simplified.png" alt="Simplified expression for example 1">
+            
+            <h3>Example 2: Multiply (7x + 2)(x² - 3x + 5)</h3>
+            <p>Use the distributive property.</p>
+            <img src="../images/distributive_example2.png" alt="Distributive property example 2">
+            <p>Combine like terms.</p>
+            <img src="../images/distributive_example2_simplified.png" alt="Simplified expression for example 2">
+            
+            <h3>Example 3: Multiply (10x - 2)(8x - 4)</h3>
+            <p>Use the FOIL method. (Hint: watch for negative signs!)</p>
+            <img src="../images/foil_example3.png" alt="FOIL method example 3">
+            <p>Combine like terms.</p>
+            <img src="../images/foil_example3_simplified.png" alt="Simplified expression for example 3">
+            <p>Factor out the greatest common factor among all terms to simplify the polynomial.</p>
+            <img src="../images/gcf_example3.png" alt="Factored expression for example 3">
+        <!-- Interactive Question Links with Integrated Icons -->
+        <div class="centered-content">    
+        <h2>Test Your Knowledge</h2>
+      <p>Click on the buttons below to try out interactive questions based on the content you've learned:</p>
+      <ul class="question-links">
+        <li>
+          <a href="Questions/q7.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 1: Identifying Common Factors</span>
+          </a>
+        </li>
+        <li>
+          <a href="Questions/q8.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 2: Factoring by Grouping</span>
+          </a>
+        </li>
+        <li>
+          <a href="Questions/q9.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 3: Factoring Trinomials</span>
+          </a>
+        </li>
+        <li>
+          <a href="Questions/q10.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 4: Difference of Squares</span>
+          </a>
+        </li>
+        <li>
+          <a href="Questions/q11.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 5: Perfect Square Trinomials</span>
+          </a>
+        </li>
+        <li>
+          <a href="Questions/q12.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 6: Factoring a Cubic Polynomial</span>
+          </a>
+        </li>
+      </ul>
         </div>
     </div>
 </section>
@@ -52,5 +123,45 @@
         navLinks.style.right = "-200px";
     }
 </script>
+<!--------JavaScript for Saving Progress-------->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Select all question icons within the list
+    const questionLinks = document.querySelectorAll(".question-links li");
+
+    questionLinks.forEach((question, index) => {
+        const questionId = `q${index + 7}Correct`; // Matches localStorage key like "q1Correct"
+        const status = localStorage.getItem(questionId);
+        const icon = question.querySelector(".icon");
+
+        if (icon) {
+            if (status === "true") {
+                icon.classList.add("completed");
+            } else if (status === "false") {
+                icon.classList.add("incorrect");
+            }
+        }
+    });
+});
+</script>
+<script>
+    // Check login status on page load
+    document.addEventListener("DOMContentLoaded", () => {
+        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+        if (token) {
+            document.getElementById("login-nav").style.display = "none";
+            document.getElementById("logout-nav").style.display = "inline-block";
+        }
+    });
+
+    // Logout function
+    function logout() {
+        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
+        alert("You have been logged out.");
+        window.location.href = 'Login.html'; // Redirect to Login page
+    }
+</script>
+
 </body>
 </html>
