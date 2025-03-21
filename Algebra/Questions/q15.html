@@ -27,44 +27,44 @@
             </div>
             <i class="fas fa-bars" onclick="showMenu()"></i>
         </nav>
-        <h1>Question 2: Factoring by Grouping</h1>
+        <h1>Question 3: Distributive Property Application</h1>
     </section>
     
     <!-- Back Link Section -->
     <section class="back-link">
-        <a href="../factoring_polynomials.html">&larr; Back to Factoring Polynomials</a>
+        <a href="../multiplying_polynomials.html">&larr; Back to Multiplying Polynomials</a>
     </section>
     
     <!-- Interactive Question Section -->
     <section class="question-section">
-        <h2>Question 2: Which of the following represents the factored form of x³ + 3x² + 2x + 6?</h2>
+        <h2>Question 3: Which of the following correctly applies the distributive property to (4x - 3)(2x + 7)?</h2>
         <p>Select the correct answer:</p>
         <form id="questionForm">
             <input type="radio" name="answer" id="answer1" value="A">
             <label for="answer1">
-                A) (x² + 2)(x + 3)
+                A) 8x² - 21
             </label>
             
             <input type="radio" name="answer" id="answer2" value="B">
             <label for="answer2">
-                B) (x + 1)(x² + 2)
+                B) 8x² + 28x - 6x - 21
             </label>
             
             <input type="radio" name="answer" id="answer3" value="C">
             <label for="answer3">
-                C) (x² + 3)(x + 2)
+                C) 8x² + 28x - 21
             </label>
             
             <input type="radio" name="answer" id="answer4" value="D">
             <label for="answer4">
-                D) (x + 2)(x² + 3)
+                D) 8x² - 12x + 7
             </label>
             
             <button type="button" onclick="checkAnswer()">Submit Answer</button>
         </form>
         <div id="feedback"></div>
         <!-- Next Button (Initially Hidden) -->
-        <a id="button" href="q9.html" style="display: none;">
+        <a id="button" href="q16.html" style="display: none;">
             <button>Next Question →</button>
         </a>
     </section>
@@ -90,18 +90,18 @@
                 return;
             }
             
-            if(selected === "C") {
-                feedback.innerHTML = "<p style='color:green;'>Correct! By grouping the terms and factoring out common terms, we get x²(x + 3) + 2(x + 3). Factoring out (x + 3), we obtain (x² + 3)(x + 2).</p>";
+            if(selected === "B") {
+                feedback.innerHTML = '<p style="color:green;">Correct! Distribute each term in (4x - 3) to each term in (2x + 7):<br>4x · 2x = 8x²<br>4x · 7 = 28x<br>-3 · 2x = -6x<br>-3 · 7 = -21</p>';
                 // Set a flag so other pages can update the icon to green
-                localStorage.setItem("q8Correct", "true");
+                localStorage.setItem("q15Correct", "true");
                 nextButton.style.display = "inline-block";
             } else {
-                localStorage.setItem("q8Correct", "false");
+                localStorage.setItem("q15Correct", "false");
                 feedback.innerHTML = "<p style='color:red;'>Incorrect. Please try again.</p>";
             }
         }
         document.addEventListener("DOMContentLoaded", function() {
-            var q1Status = localStorage.getItem("q8Correct");
+            var q1Status = localStorage.getItem("q15Correct");
 
             if (q1Status === "true") {
                 var q1Icon = document.querySelector(".question-button .icon");
@@ -125,8 +125,8 @@
                 return;
             }
 
-            var isCorrect = selectedAnswer.value === "C"; // Adjust based on correct answer
-            localStorage.setItem("q8Correct", isCorrect ? "true" : "false");
+            var isCorrect = selectedAnswer.value === "D"; // Adjust based on correct answer
+            localStorage.setItem("q15Correct", isCorrect ? "true" : "false");
 
             var resultMessage = document.createElement("p");
             resultMessage.textContent = isCorrect ? "Correct!" : "Incorrect. Try again!";

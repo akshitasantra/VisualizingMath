@@ -27,44 +27,44 @@
             </div>
             <i class="fas fa-bars" onclick="showMenu()"></i>
         </nav>
-        <h1>Question 2: Factoring by Grouping</h1>
+        <h1>Question 5: Multiplying a Binomial and Trinomial</h1>
     </section>
     
     <!-- Back Link Section -->
     <section class="back-link">
-        <a href="../factoring_polynomials.html">&larr; Back to Factoring Polynomials</a>
+        <a href="../multiplying_polynomials.html">&larr; Back to Multiplying Polynomials</a>
     </section>
     
     <!-- Interactive Question Section -->
     <section class="question-section">
-        <h2>Question 2: Which of the following represents the factored form of x³ + 3x² + 2x + 6?</h2>
+        <h2>Question 5: What is the expanded form of (2x + 1)(x² - 3x + 4)?</h2>
         <p>Select the correct answer:</p>
         <form id="questionForm">
             <input type="radio" name="answer" id="answer1" value="A">
             <label for="answer1">
-                A) (x² + 2)(x + 3)
+                A) 2x³ - 6x² + 8x + x² - 3x + 4
             </label>
             
             <input type="radio" name="answer" id="answer2" value="B">
             <label for="answer2">
-                B) (x + 1)(x² + 2)
+                B) 2x³ - 5x² + 5x + 4
             </label>
             
             <input type="radio" name="answer" id="answer3" value="C">
             <label for="answer3">
-                C) (x² + 3)(x + 2)
+                C) 2x³ - 6x² + 5x + 4
             </label>
             
             <input type="radio" name="answer" id="answer4" value="D">
             <label for="answer4">
-                D) (x + 2)(x² + 3)
+                D) 2x³ - 6x² + 5x + 4
             </label>
             
             <button type="button" onclick="checkAnswer()">Submit Answer</button>
         </form>
         <div id="feedback"></div>
         <!-- Next Button (Initially Hidden) -->
-        <a id="button" href="q9.html" style="display: none;">
+        <a id="button" href="q18.html" style="display: none;">
             <button>Next Question →</button>
         </a>
     </section>
@@ -90,18 +90,18 @@
                 return;
             }
             
-            if(selected === "C") {
-                feedback.innerHTML = "<p style='color:green;'>Correct! By grouping the terms and factoring out common terms, we get x²(x + 3) + 2(x + 3). Factoring out (x + 3), we obtain (x² + 3)(x + 2).</p>";
+            if(selected === "D") {
+                feedback.innerHTML = '<p style="color:green;">Correct! Distribute each term:<br><br>2x × x² = 2x³<br>2x × (-3x) = -6x²<br>2x × 4 = 8x<br>1 × x² = x²<br>1 × (-3x) = -3x<br>1 × 4 = 4<br><br>Now, combine like terms:<br>2x³ - 6x² + 8x + x² - 3x + 4 = <strong>2x³ - 6x² + 5x + 4</strong>.</p>';
                 // Set a flag so other pages can update the icon to green
-                localStorage.setItem("q8Correct", "true");
+                localStorage.setItem("q17Correct", "true");
                 nextButton.style.display = "inline-block";
             } else {
-                localStorage.setItem("q8Correct", "false");
+                localStorage.setItem("q17Correct", "false");
                 feedback.innerHTML = "<p style='color:red;'>Incorrect. Please try again.</p>";
             }
         }
         document.addEventListener("DOMContentLoaded", function() {
-            var q1Status = localStorage.getItem("q8Correct");
+            var q1Status = localStorage.getItem("q17Correct");
 
             if (q1Status === "true") {
                 var q1Icon = document.querySelector(".question-button .icon");
@@ -125,8 +125,8 @@
                 return;
             }
 
-            var isCorrect = selectedAnswer.value === "C"; // Adjust based on correct answer
-            localStorage.setItem("q8Correct", isCorrect ? "true" : "false");
+            var isCorrect = selectedAnswer.value === "D"; // Adjust based on correct answer
+            localStorage.setItem("q17Correct", isCorrect ? "true" : "false");
 
             var resultMessage = document.createElement("p");
             resultMessage.textContent = isCorrect ? "Correct!" : "Incorrect. Try again!";
