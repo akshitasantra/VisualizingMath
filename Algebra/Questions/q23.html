@@ -27,45 +27,45 @@
             </div>
             <i class="fas fa-bars" onclick="showMenu()"></i>
         </nav>
-        <h1>Question 6: Factoring a Cubic Polynomial</h1>
+        <h1>Question 5: Divide 6x² - x - 5 by 2x - 1</h1>
     </section>
     
     <!-- Back Link Section -->
     <section class="back-link">
-        <a href="../factoring_polynomials.html">&larr; Back to Factoring Polynomials</a>
+        <a href="../dividing_polynomials.html">&larr; Back to Dividing Polynomials</a>
     </section>
     
     <!-- Interactive Question Section -->
     <section class="question-section">
-        <h2>Question 6: Which of the following is a correct factorization of x³ – 8?</h2>
+        <h2>Question 5: Divide 6x² - x - 5 by 2x - 1</h2>
         <p>Select the correct answer:</p>
         <form id="questionForm">
             <input type="radio" name="answer" id="answer1" value="A">
             <label for="answer1">
-                A) (x – 2)(x² + 2x + 4)
+                A) 3x + 1 - <span class="fraction"><span class="numerator">4</span><span class="denom">(2x - 1)</span></span>
             </label>
             
             <input type="radio" name="answer" id="answer2" value="B">
             <label for="answer2">
-                B) (x – 2)(x² – 2x + 4)
+                B) 3x + 1 + <span class="fraction"><span class="numerator">4</span><span class="denom">(2x - 1)</span></span>
             </label>
             
             <input type="radio" name="answer" id="answer3" value="C">
             <label for="answer3">
-                C) (x + 2)(x² + 2x + 4)
+                C) 3x - 1 - <span class="fraction"><span class="numerator">4</span><span class="denom">(2x - 1)</span></span>
             </label>
             
             <input type="radio" name="answer" id="answer4" value="D">
             <label for="answer4">
-                D) (x + 2)(x² – 2x + 4)
+                D) 3x + 1 - <span class="fraction"><span class="numerator">2</span><span class="denom">(2x - 1)</span></span>
             </label>
             
             <button type="button" onclick="checkAnswer()">Submit Answer</button>
         </form>
         <div id="feedback"></div>
         <!-- Next Button (Initially Hidden) -->
-        <a id="button" href="../multiplying_polynomials.html" style="display: none;">
-            <button>Next Section →</button>
+        <a id="button" href="q24.html" style="display: none;">
+            <button>Next Question →</button>
         </a>
     </section>
     
@@ -91,17 +91,17 @@
             }
             
             if(selected === "A") {
-                feedback.innerHTML = "<p style='color:green;'>Correct! This follows the difference of cubes formula: a³ - b³ = (a - b)(a² + ab + b²). Here, x³ - 8 is (x³ - 2³), so it factors as (x – 2)(x² + 2x + 4).</p>";
+                feedback.innerHTML = '<p style="color:green;">Correct! Dividing 6x² - x - 5 by 2x - 1 using long division yields a quotient of 3x + 1 with a remainder of -4.<br><br>Thus, the result is: 3x + 1 - <span class="fraction"><span class="numerator">4</span><span class="denom">(2x - 1)</span></span></p>';
                 // Set a flag so other pages can update the icon to green
-                localStorage.setItem("q12Correct", "true");
+                localStorage.setItem("q23Correct", "true");
                 nextButton.style.display = "inline-block";
             } else {
-                localStorage.setItem("q12Correct", "false");
+                localStorage.setItem("q23Correct", "false");
                 feedback.innerHTML = "<p style='color:red;'>Incorrect. Please try again.</p>";
             }
         }
         document.addEventListener("DOMContentLoaded", function() {
-            var q1Status = localStorage.getItem("q12Correct");
+            var q1Status = localStorage.getItem("q23Correct");
 
             if (q1Status === "true") {
                 var q1Icon = document.querySelector(".question-button .icon");
@@ -126,7 +126,7 @@
             }
 
             var isCorrect = selectedAnswer.value === "A"; // Adjust based on correct answer
-            localStorage.setItem("q12Correct", isCorrect ? "true" : "false");
+            localStorage.setItem("q23Correct", isCorrect ? "true" : "false");
 
             var resultMessage = document.createElement("p");
             resultMessage.textContent = isCorrect ? "Correct!" : "Incorrect. Try again!";

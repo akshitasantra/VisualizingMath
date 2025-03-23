@@ -12,32 +12,128 @@
 <body>
       <section class="sub-header">
         <nav> 
-            <a href="index.html"><img src="../images/logo.png"></a>
+            <a href="../index.html"><img src="../images/logo.png"></a>
             <div class="nav-links" id="navLinks">
                 <i class="fas fa-xmark" onclick="hideMenu()"></i>
                 <ul>
                     <li><a href="../index.html">HOME</a></li>
                     <li><a href="../about.html">ABOUT</a></li>
                     <li><a href="../SignUp.html">SIGN UP</a></li>
-                    <li><a href="../Login.html">LOG IN</a></li>
+                    <li id="login-nav"><a href="../Login.html">LOG IN</a></li>
+                    <li id="logout-nav" style="display: none;"><a href="#" onclick="logout()">LOG OUT</a></li>
                     <li><a href="../Algebra.html">ALGEBRA</a></li>
                     <li><a href="">GEOMETRY</a></li>
                 </ul>
             </div>
             <i class="fas fa-bars" onclick="showMenu()"></i>
         </nav>
-        <h1>About Us</h1>
+        <h1>Dividing Polynomials</h1>
 </section>
-<!-----About Us Content----->
-<section class="about-us">
-    <div class="row">
-        <div class="about-col">
-        <h1>Who Are We?</h1>
-            <p>Our team is comprised of passionate members from the <b>Society of Women Engineers (SWE) at the University of Texas at Austin</b>, each dedicated to empowering students through free, high-quality educational resources. We are driven by a shared commitment to improving STEM education and making a positive impact on the learning experiences of middle and high school students.</p>
-            <a href="" class="hero-btn purple-btn">EXPLORE NOW</a>
-        </div>
-        <div class="about-col">
-        <img src="../images/about.jpg">
+<!----- Understanding Polynomials Content ----->
+<section class="content">
+    <div class="container">
+        <h2>Summary</h2>
+    <p>The division of a polynomial of degree 2 or a polynomial of degree 1 by a polynomial of degree 1 (assuming the degree of the divisor does not exceed the degree of the dividend).</p>
+
+    <p><strong>Reminder:</strong> The degree of a polynomial is the highest exponent of the variable.</p>
+
+    <h3>Examples of Polynomials</h3>
+    <p><strong>First Degree Polynomial Examples:</strong> x-2, x+27</p>
+    <p><strong>Second Degree Polynomial Examples:</strong> 4x² + 3x + 6, x² - 23</p>
+
+    <h2>Steps for Dividing Polynomials Using Long Division</h2>
+
+    <div class="step">
+        <h3>Step 1: Set up the division problem</h3>
+        <p>Set up the division problem just like you would with regular numbers.</p>
+        <img src="../images/dividing_polynomials_image1.png" alt="Set up the division problem">
+    </div>
+
+    <div class="step">
+        <h3>Step 2: Divide the first term of the dividend by the first term of the divisor</h3>
+        <p>Take the first term of the dividend and divide it by the first term of the divisor.</p>
+        <img src="../images/dividing_polynomials_image2.png" alt="Divide the first terms">
+    </div>
+
+    <div class="step">
+        <h3>Step 3: Multiply the divisor by the term you just found</h3>
+        <p>Multiply the divisor by the term you just found in Step 2.</p>
+        <img src="../images/dividing_polynomials_image3.png" alt="Multiply divisor by term">
+    </div>
+
+    <div class="step">
+        <h3>Step 4: Subtract the result from the dividend</h3>
+        <p>Subtract the result from the dividend to get a new polynomial.</p>
+        <img src="../images/dividing_polynomials_image4.png" alt="Subtract result from dividend">
+    </div>
+
+    <div class="step">
+        <h3>Step 5: Repeat the process with the new polynomial</h3>
+        <p>Repeat the same steps with the new polynomial until you can't divide anymore.</p>
+        <img src="../images/dividing_polynomials_image5.png" alt="Repeat process with new polynomial">
+    </div>
+
+    <div class="step">
+        <h3>Step 6: Write the final result and remainder as a fraction over the divisor</h3>
+        <p>The final result is written as the quotient, and the remainder is placed over the divisor as a fraction.</p>
+        <img src="../images/dividing_polynomials_image6.png" alt="Final result and remainder">
+    </div>
+
+    <div class="tip">
+        <p><strong>Tip:</strong> Always align terms by their degrees when setting up the division.</p>
+    </div>
+
+        <!-- Interactive Question Links with Integrated Icons -->
+        <div class="centered-content">    
+        <h2>Test Your Knowledge</h2>
+      <p>Click on the buttons below to try out interactive questions based on the content you've learned:</p>
+      <ul class="question-links">
+        <li>
+          <a href="Questions/q19.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 1: Divide 4x² - 3x + 1 by x - 1</span>
+          </a>
+        </li>
+        <li>
+          <a href="Questions/q20.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 2: Divide 2x² + 6x + 4 by x + 3</span>
+          </a>
+        </li>
+        <li>
+          <a href="Questions/q21.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 3: Divide 5x² + 2x - 8 by x - 2</span>
+          </a>
+        </li>
+        <li>
+          <a href="Questions/q22.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 4: Divide 3x² + 5x - 2 by x + 1</span>
+          </a>
+        </li>
+        <li>
+          <a href="Questions/q23.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 5: Divide 6x² - x - 5 by 2x - 1</span>
+          </a>
+        </li>
+        <li>
+          <a href="Questions/q24.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 6: Divide x² + 2x - 8 by x + 4</span>
+          </a>
+        </li>
+          <a href="distributive_property.html">
+            <span>Next Section →</span>
+        </a>
+      </ul>
         </div>
     </div>
 </section>
@@ -52,5 +148,45 @@
         navLinks.style.right = "-200px";
     }
 </script>
+<!--------JavaScript for Saving Progress-------->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Select all question icons within the list
+    const questionLinks = document.querySelectorAll(".question-links li");
+
+    questionLinks.forEach((question, index) => {
+        const questionId = `q${index + 19}Correct`; // Matches localStorage key like "q1Correct"
+        const status = localStorage.getItem(questionId);
+        const icon = question.querySelector(".icon");
+
+        if (icon) {
+            if (status === "true") {
+                icon.classList.add("completed");
+            } else if (status === "false") {
+                icon.classList.add("incorrect");
+            }
+        }
+    });
+});
+</script>
+<script>
+    // Check login status on page load
+    document.addEventListener("DOMContentLoaded", () => {
+        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+        if (token) {
+            document.getElementById("login-nav").style.display = "none";
+            document.getElementById("logout-nav").style.display = "inline-block";
+        }
+    });
+
+    // Logout function
+    function logout() {
+        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
+        alert("You have been logged out.");
+        window.location.href = 'Login.html'; // Redirect to Login page
+    }
+</script>
+
 </body>
 </html>

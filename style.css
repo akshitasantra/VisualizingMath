@@ -249,6 +249,23 @@ p{
 b {
     color: black; /* Ensures all bold text stays black */
 }
+.fraction {
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  margin: 0 2px;
+}
+.fraction > .numerator {
+  display: block;
+  border-bottom: 1px solid;
+  padding: 0 2px;
+  font-size: 0.9em;
+}
+.fraction > .denom {
+  display: block;
+  padding: 0 2px;
+  font-size: 0.9em;
+}
 .main-container {
     display: flex;
     align-items: flex-start;
@@ -403,7 +420,9 @@ ul {
     display: inline-block; /* Makes the list behave like an inline element */
     text-align: left; /* Ensures text inside stays aligned */
 }
-
+li{
+    list-style-position: inside;
+}
 .question-links {
     list-style-type: none;
     padding: 0;
@@ -444,6 +463,21 @@ ul {
   display: inline-block;
   line-height: 1.2;
 }
+.step {
+    margin: 10px 0;
+}
+.tip {
+    background-color: #D0CFF7;
+    border-left: 5px solid #6a0dad;
+    padding: 10px;
+    font-style: italic;
+}
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 10px 0;
+}
 @media (max-width: 768px) {
     .sidebar {
         display: none;
@@ -453,6 +487,30 @@ ul {
     }
     .content {
         margin-left: 0;
+    }
+    .content {
+        padding: 10px; /* Reduces padding */
+    }
+
+    .unit a {
+        font-size: 14px; /* Smaller font size for better readability */
+    }
+
+    .question-links a {
+        width: 100%; /* Make links full width */
+        max-width: none; /* Remove max width on small screens */
+    }
+
+    .legend {
+        flex-direction: column; /* Stack legend items vertically */
+        align-items: flex-start;
+    }
+
+    .popup {
+        width: 180px; /* Smaller popup for mobile */
+    }
+    .question-links a {
+        width: 300px;
     }
 }
 
