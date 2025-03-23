@@ -266,6 +266,10 @@ b {
   padding: 0 2px;
   font-size: 0.9em;
 }
+.math-example {
+    font-weight: bold;
+    font-size: 1.5em;
+}
 .main-container {
     display: flex;
     align-items: flex-start;
