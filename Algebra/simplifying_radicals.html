@@ -12,32 +12,104 @@
 <body>
       <section class="sub-header">
         <nav> 
-            <a href="index.html"><img src="../images/logo.png"></a>
+            <a href="../index.html"><img src="../images/logo.png"></a>
             <div class="nav-links" id="navLinks">
                 <i class="fas fa-xmark" onclick="hideMenu()"></i>
                 <ul>
                     <li><a href="../index.html">HOME</a></li>
                     <li><a href="../about.html">ABOUT</a></li>
                     <li><a href="../SignUp.html">SIGN UP</a></li>
-                    <li><a href="../Login.html">LOG IN</a></li>
+                    <li id="login-nav"><a href="../Login.html">LOG IN</a></li>
+                    <li id="logout-nav" style="display: none;"><a href="#" onclick="logout()">LOG OUT</a></li>
                     <li><a href="../Algebra.html">ALGEBRA</a></li>
                     <li><a href="">GEOMETRY</a></li>
                 </ul>
             </div>
             <i class="fas fa-bars" onclick="showMenu()"></i>
         </nav>
-        <h1>About Us</h1>
+        <h1>Simplifying Radicals</h1>
 </section>
-<!-----About Us Content----->
-<section class="about-us">
-    <div class="row">
-        <div class="about-col">
-        <h1>Who Are We?</h1>
-            <p>Our team is comprised of passionate members from the <b>Society of Women Engineers (SWE) at the University of Texas at Austin</b>, each dedicated to empowering students through free, high-quality educational resources. We are driven by a shared commitment to improving STEM education and making a positive impact on the learning experiences of middle and high school students.</p>
-            <a href="" class="hero-btn purple-btn">EXPLORE NOW</a>
+<!----- Understanding Polynomials Content ----->
+<section class="content">
+    <div class="container">
+        <p>A radical is an expression that involves a root, such as a square root (√) or cube root (∛). Simplifying radicals means rewriting them in a more manageable form by removing perfect squares or cubes from under the radical.</p>
+
+        <h2>How to Simplify Radicals</h2>
+        <ol>
+            <li>Factor the number under the radical and identify perfect squares (or cubes).</li>
+            <li>Rewrite the radical by splitting it into two parts: a perfect square and another factor.</li>
+            <li>Simplify the perfect square or cube outside the radical.</li>
+            <li>Check your answer by squaring (or cubing) the simplified expression.</li>
+        </ol>
+
+        <h2>Examples</h2>
+
+        <div class="example">
+            <h3>Example 1: Square Roots</h3>
+            <p><strong>Problem:</strong> Simplify √98</p>
+            <p>Step 1: Factor 98 → 98 = 49 × 2 (since 49 is a perfect square).</p>
+            <p>Step 2: Rewrite: √(49 × 2) = √49 × √2</p>
+            <p>Step 3: Simplify: 7√2</p>
+            <p><strong>Final Answer:</strong> 7√2</p>
         </div>
-        <div class="about-col">
-        <img src="../images/about.jpg">
+
+        <div class="example">
+            <h3>Example 2: Cube Roots</h3>
+            <p><strong>Problem:</strong> Simplify ∛54</p>
+            <p>Step 1: Factor 54 → 54 = 27 × 2 (since 27 is a perfect cube).</p>
+            <p>Step 2: Rewrite: ∛(27 × 2) = ∛27 × ∛2</p>
+            <p>Step 3: Simplify: 3∛2</p>
+            <p><strong>Final Answer:</strong> 3∛2</p>
+        </div>
+
+        <!-- Interactive Question Links with Integrated Icons -->
+        <div class="centered-content">    
+        <h2>Test Your Knowledge</h2>
+      <p>Click on the buttons below to try out interactive questions based on the content you've learned:</p>
+      <ul class="question-links">
+        <li>
+          <a href="Questions/q37.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 1: Identifying a Perfect Square</span>
+          </a>
+        </li>
+        <li>
+          <a href="Questions/q38.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 2: Simplifying Square Roots</span>
+          </a>
+        </li>
+        <li>
+          <a href="Questions/q39.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 3: Simplifying Cube Roots</span>
+          </a>
+        </li>
+        <li>
+          <a href="Questions/q40.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 4: Recognizing Perfect Cubes</span>
+          </a>
+        </li>
+        <li>
+          <a href="Questions/q41.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 5: Simplifying Expressions with Variables</span>
+          </a>
+        </li>
+        <li>
+          <a href="Questions/q42.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 6: Applying the Cube Root Rule</span>
+          </a>
+        </li>
+      </ul>
         </div>
     </div>
 </section>
@@ -52,5 +124,45 @@
         navLinks.style.right = "-200px";
     }
 </script>
+<!--------JavaScript for Saving Progress-------->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Select all question icons within the list
+    const questionLinks = document.querySelectorAll(".question-links li");
+
+    questionLinks.forEach((question, index) => {
+        const questionId = `q${index + 37}Correct`; // Matches localStorage key like "q1Correct"
+        const status = localStorage.getItem(questionId);
+        const icon = question.querySelector(".icon");
+
+        if (icon) {
+            if (status === "true") {
+                icon.classList.add("completed");
+            } else if (status === "false") {
+                icon.classList.add("incorrect");
+            }
+        }
+    });
+});
+</script>
+<script>
+    // Check login status on page load
+    document.addEventListener("DOMContentLoaded", () => {
+        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+        if (token) {
+            document.getElementById("login-nav").style.display = "none";
+            document.getElementById("logout-nav").style.display = "inline-block";
+        }
+    });
+
+    // Logout function
+    function logout() {
+        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
+        alert("You have been logged out.");
+        window.location.href = 'Login.html'; // Redirect to Login page
+    }
+</script>
+
 </body>
 </html>
