@@ -27,41 +27,39 @@
             </div>
             <i class="fas fa-bars" onclick="showMenu()"></i>
         </nav>
-        <h1>Difference of Squares</h1>
+        <h1>Postulates and Axioms</h1>
 </section>
 <!----- Understanding Polynomials Content ----->
 <section class="content">
     <div class="container">
-        <h2>Summary</h2>
-        <p>Decide if a binomial can be written as the difference of two squares and, if possible, use the structure of a difference of two squares to rewrite the binomial.</p>
-        
-        <h2>Perfect Squares</h2>
-        <p>A <span class="highlight">perfect square</span> is a term that can be written as the product of a term with itself, or the square of a term.</p>
-        
-        <h3>Examples of Perfect Squares:</h3>
+        <div class="section">
+        <h2>What Are Axioms and Postulates?</h2>
+        <p><strong>Axioms</strong> are universal truths in mathematics that do not require proof. They are fundamental assumptions that apply across different mathematical fields.</p>
+        <p><strong>Postulates</strong> are specific to a branch of mathematics, such as Euclidean Geometry. They are accepted as true without proof because no counterexamples exist.</p>
+        <p>Both axioms and postulates serve as the foundation for logical reasoning and mathematical proofs.</p>
+    </div>
+
+    <div class="section">
+        <h2>The 5 Axioms</h2>
         <ul>
-            <li>Integer Examples: 1, 4, 9, 16, 25, 36, ...</li>
-            <li>Variable Examples: x², y⁴, a⁶ (Any variable with an even exponent is a perfect square)</li>
+            <li>Things which are equal to the same thing are also equal to one another.</li>
+            <li>If equals are added to equals, the wholes are equal.</li>
+            <li>If equals are subtracted from equals, the remainders are equal.</li>
+            <li>Things which coincide with one another are equal to one another.</li>
+            <li>The whole is greater than the part.</li>
         </ul>
-        
-        <h2>Difference of Squares</h2>
-        <p>The <span class="highlight">difference of squares</span> states that the difference (subtraction) between two perfect squares can be written in the following form:</p>
-        
-        <p class="formula">a² - b² = (a - b)(a + b)</p>
-        
-        <h3>Examples:</h3>
+    </div>
+
+    <div class="section">
+        <h2>Euclid's Postulates</h2>
         <ul>
-            <li>x² - 9 = (x - 3)(x + 3)</li>
-            <li>4y² - 25 = (2y - 5)(2y + 5)</li>
-            <li>49a² - 64b² = (7a - 8b)(7a + 8b)</li>
+            <li>A straight line segment may be drawn from any given point to any other.</li>
+            <li>A straight line may be extended to any finite length.</li>
+            <li>A circle may be described with any given point as its center and any distance as its radius.</li>
+            <li>All right angles are congruent.</li>
+            <li>If a straight line intersects two other straight lines and makes the two interior angles on one side together less than two right angles, then the two lines will meet if extended far enough on the side where the angles are less than two right angles.</li>
         </ul>
-        
-        <h3>Steps to Factor Using Difference of Squares:</h3>
-        <ol>
-            <li>Check if both terms are perfect squares.</li>
-            <li>Confirm that they are separated by subtraction.</li>
-            <li>Rewrite the expression using the formula <span class="formula">a² - b² = (a - b)(a + b)</span>.</li>
-        </ol>
+        <p><strong>Note:</strong> The fifth postulate, known as the <em>parallel postulate</em>, has been historically significant and is often considered more complex than the others.</p>
     </div>
 
         <!-- Interactive Question Links with Integrated Icons -->
@@ -70,48 +68,48 @@
       <p>Click on the buttons below to try out interactive questions based on the content you've learned:</p>
       <ul class="question-links">
         <li>
-          <a href="Questions/q31.html" class="question-button">
+          <a href="Questions/q49.html" class="question-button">
             <div class="icon">
             </div>
-            <span>Question 1: Identifying a Difference of Squares</span>
+            <span>Question 1: Understanding Axioms</span>
           </a>
         </li>
         <li>
-          <a href="Questions/q32.html" class="question-button">
+          <a href="Questions/q50.html" class="question-button">
             <div class="icon">
             </div>
-            <span>Question 2: Factoring a Difference of Squares</span>
+            <span>Question 2: Postulates vs Axioms</span>
           </a>
         </li>
         <li>
-          <a href="Questions/q33.html" class="question-button">
+          <a href="Questions/q51.html" class="question-button">
             <div class="icon">
             </div>
-            <span>Question 3: Recognizing Perfect Squares</span>
+            <span>Question 3: Euclid's First Postulate</span>
           </a>
         </li>
         <li>
-          <a href="Questions/q34.html" class="question-button">
+          <a href="Questions/q52.html" class="question-button">
             <div class="icon">
             </div>
-            <span>Question 4: Factoring a Complex Difference of Squares</span>
+            <span>Question 4: The Fifth Postulate</span>
           </a>
         </li>
         <li>
-          <a href="Questions/q35.html" class="question-button">
+          <a href="Questions/q53.html" class="question-button">
             <div class="icon">
             </div>
-            <span>Question 5: Special Cases</span>
+            <span>Question 5: Axioms in Action</span>
           </a>
         </li>
         <li>
-          <a href="Questions/q36.html" class="question-button">
+          <a href="Questions/q54.html" class="question-button">
             <div class="icon">
             </div>
-            <span>Question 6: Factoring a Polynomial with a Difference of Squares</span>
+            <span>Question 6: Adding Equals to Equals</span>
           </a>
         </li>
-          <a href="simplifying_radicals.html">
+          <a href="theorems.html">
             <span>Next Section →</span>
         </a>
       </ul>
@@ -136,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const questionLinks = document.querySelectorAll(".question-links li");
 
     questionLinks.forEach((question, index) => {
-        const questionId = `q${index + 31}Correct`; // Matches localStorage key like "q1Correct"
+        const questionId = `q${index + 49}Correct`; // Matches localStorage key like "q1Correct"
         const status = localStorage.getItem(questionId);
         const icon = question.querySelector(".icon");
 
