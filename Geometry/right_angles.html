@@ -27,41 +27,50 @@
             </div>
             <i class="fas fa-bars" onclick="showMenu()"></i>
         </nav>
-        <h1>Difference of Squares</h1>
+        <h1>Right Triangle Special Cases</h1>
 </section>
 <!----- Understanding Polynomials Content ----->
 <section class="content">
     <div class="container">
-        <h2>Summary</h2>
-        <p>Decide if a binomial can be written as the difference of two squares and, if possible, use the structure of a difference of two squares to rewrite the binomial.</p>
-        
-        <h2>Perfect Squares</h2>
-        <p>A <span class="highlight">perfect square</span> is a term that can be written as the product of a term with itself, or the square of a term.</p>
-        
-        <h3>Examples of Perfect Squares:</h3>
-        <ul>
-            <li>Integer Examples: 1, 4, 9, 16, 25, 36, ...</li>
-            <li>Variable Examples: x², y⁴, a⁶ (Any variable with an even exponent is a perfect square)</li>
-        </ul>
-        
-        <h2>Difference of Squares</h2>
-        <p>The <span class="highlight">difference of squares</span> states that the difference (subtraction) between two perfect squares can be written in the following form:</p>
-        
-        <p class="formula">a² - b² = (a - b)(a + b)</p>
-        
-        <h3>Examples:</h3>
-        <ul>
-            <li>x² - 9 = (x - 3)(x + 3)</li>
-            <li>4y² - 25 = (2y - 5)(2y + 5)</li>
-            <li>49a² - 64b² = (7a - 8b)(7a + 8b)</li>
-        </ul>
-        
-        <h3>Steps to Factor Using Difference of Squares:</h3>
-        <ol>
-            <li>Check if both terms are perfect squares.</li>
-            <li>Confirm that they are separated by subtraction.</li>
-            <li>Rewrite the expression using the formula <span class="formula">a² - b² = (a - b)(a + b)</span>.</li>
-        </ol>
+        <h2>Case 1: 45-45-90 Right Triangle</h2>
+  <p>
+    A 45-45-90 right triangle is a special type of triangle where two angles are 45 degrees and one is a right angle (90 degrees). 
+    Because the two 45-degree angles are the same, the two legs opposite them are also the same length.
+    The hypotenuse in this triangle is <strong>√2 times the length of each leg</strong>. 
+    You can prove this relationship using the Pythagorean Theorem.
+  </p>
+  <img src="../images/Screenshot 2025-04-13 220016.png">
+
+  <h2>Case 2: 30-60-90 Right Triangle</h2>
+  <p>
+    A 30-60-90 right triangle has angle measures of 30°, 60°, and 90°. This creates a predictable ratio between the sides:
+  </p>
+  <ul>
+    <li>The side opposite the 30° angle is the shortest and has length <strong>x</strong>.</li>
+    <li>The side opposite the 60° angle is <strong>x√3</strong>.</li>
+    <li>The hypotenuse (opposite the 90° angle) is <strong>2x</strong>.</li>
+  </ul>
+  <p>
+    This ratio makes it easier to solve for unknown sides without needing trigonometry! 
+    A helpful trick is to remember that the bigger the angle, the longer the side.
+    Since √3 is about 1.7, it makes sense that x√3 is longer than x but shorter than 2x.
+  </p>
+
+  <h2>Why Does This Matter?</h2>
+  <p>
+    Special case right triangles are incredibly useful in geometry. 
+    If you recognize one, you can calculate the other two sides of the triangle just by knowing <em>one</em> side — no sine, cosine, or tangent needed!
+  </p>
+  <p>
+    <strong>Example:</strong>  
+    If you have a 30-60-90 triangle and the hypotenuse (the side across from the 90° angle) is 16 units long, then:
+  </p>
+  <ul>
+    <li>That corresponds to <strong>2x = 16</strong>, so <strong>x = 8</strong>.</li>
+    <li>The side opposite the 60° angle is <strong>8√3</strong> units long.</li>
+  </ul>
+
+   <img src="../images/Screenshot 2025-04-13 220030.png">
     </div>
 
         <!-- Interactive Question Links with Integrated Icons -->
@@ -70,48 +79,48 @@
       <p>Click on the buttons below to try out interactive questions based on the content you've learned:</p>
       <ul class="question-links">
         <li>
-          <a href="Questions/q31.html" class="question-button">
+          <a href="Questions/q67.html" class="question-button">
             <div class="icon">
             </div>
-            <span>Question 1: Identifying a Difference of Squares</span>
+            <span>Question 1: Recognizing a 45-45-90 Triangle</span>
           </a>
         </li>
         <li>
-          <a href="Questions/q32.html" class="question-button">
+          <a href="Questions/q68.html" class="question-button">
             <div class="icon">
             </div>
-            <span>Question 2: Factoring a Difference of Squares</span>
+            <span>Question 2: Hypotenuse of a 45-45-90 Triangle</span>
           </a>
         </li>
         <li>
-          <a href="Questions/q33.html" class="question-button">
+          <a href="Questions/q69.html" class="question-button">
             <div class="icon">
             </div>
-            <span>Question 3: Recognizing Perfect Squares</span>
+            <span>Question 3: Sides of a 30-60-90 Triangle</span>
           </a>
         </li>
         <li>
-          <a href="Questions/q34.html" class="question-button">
+          <a href="Questions/q70.html" class="question-button">
             <div class="icon">
             </div>
-            <span>Question 4: Factoring a Complex Difference of Squares</span>
+            <span>Question 4: Finding a Missing Side</span>
           </a>
         </li>
         <li>
-          <a href="Questions/q35.html" class="question-button">
+          <a href="Questions/q71.html" class="question-button">
             <div class="icon">
             </div>
-            <span>Question 5: Special Cases</span>
+            <span>Question 5: Using the Ratio</span>
           </a>
         </li>
         <li>
-          <a href="Questions/q36.html" class="question-button">
+          <a href="Questions/q72.html" class="question-button">
             <div class="icon">
             </div>
-            <span>Question 6: Factoring a Polynomial with a Difference of Squares</span>
+            <span>Question 6: Real-World Use of Special Triangles</span>
           </a>
         </li>
-          <a href="simplifying_radicals.html">
+          <a href="trigonometry.html">
             <span>Next Section →</span>
         </a>
       </ul>
@@ -136,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const questionLinks = document.querySelectorAll(".question-links li");
 
     questionLinks.forEach((question, index) => {
-        const questionId = `q${index + 31}Correct`; // Matches localStorage key like "q1Correct"
+        const questionId = `q${index + 67}Correct`; // Matches localStorage key like "q1Correct"
         const status = localStorage.getItem(questionId);
         const icon = question.querySelector(".icon");
 

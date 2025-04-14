@@ -140,6 +140,14 @@ p{
     display: flex;
     justify-content: space-between;
 }
+.course-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 4%; /* Adds spacing between the two boxes */
+    margin: 0 auto;
+    max-width: 1000px; /* Optional: limits the overall width */
+}
 .course-col{
     flex-basis: 48%;
     background: #f8f3ff;
@@ -148,6 +156,11 @@ p{
     padding: 20px 12px;
     box-sizing: border-box;
     transition: 0.5s;
+}
+.course-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
 }
 h2{
     text-align: center;
