@@ -145,12 +145,11 @@
         alert("You have been logged out.");
         window.location.href = 'Login.html'; // Redirect to Login page
     }
-<!-- Firebase CDN -->
+<!-- Firebase SDKs (Non-modular / compat version) -->
 <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-analytics-compat.js"></script>
 
 <script>
-  // Your Firebase config
   const firebaseConfig = {
     apiKey: "AIzaSyAMPqEC7vmFh0Sm22KMmAVxaS_F7CI_YRM",
     authDomain: "visualizing-math.firebaseapp.com",
@@ -161,10 +160,11 @@
     measurementId: "G-7LGGDVLGLP"
   };
 
-  // Initialize Firebase (Compat mode)
+  // Initialize Firebase (compat mode)
   const app = firebase.initializeApp(firebaseConfig);
   const analytics = firebase.analytics();
 </script>
+
 
 
 </body>
