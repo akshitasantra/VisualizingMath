@@ -71,74 +71,95 @@
     </div>
     <!-- Add a loading spinner -->
     <div id="loading" style="display:none;">Loading...</div>
-    <!-- JavaScript for Toggle Menu and Form Submission -->
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js"></script>
+
     <script type="module">
-  document.getElementById('submit').addEventListener('click', async function(e) {
-    e.preventDefault();
+        // Your Firebase config
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
 
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const firstname = document.getElementById('firstname').value;
-    const lastname = document.getElementById('lastname').value;
-    
-    if (!firstname || !lastname || !email || !password) {
-      alert("All fields are required.");
-      return;
-    }
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
 
-    // Simple email validation
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailRegex.test(email)) {
-      alert("Please enter a valid email address.");
-      return;
-    }
+        document.getElementById('submit').addEventListener('click', async function(e) {
+            e.preventDefault();
 
-    // Password validation
-    if (password.length < 6) {
-      alert("Password must be at least 6 characters long.");
-      return;
-    }
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const firstname = document.getElementById('firstname').value;
+            const lastname = document.getElementById('lastname').value;
 
-    // Show loading spinner
-    document.getElementById('loading').style.display = 'block';
+            if (!firstname || !lastname || !email || !password) {
+                alert("All fields are required.");
+                return;
+            }
 
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      
-      // Update profile with first and last name
-      await updateProfile(userCredential.user, {
-        displayName: `${firstname} ${lastname}`
-      });
+            // Simple email validation
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailRegex.test(email)) {
+                alert("Please enter a valid email address.");
+                return;
+            }
 
-      alert("Sign up successful!");
-      window.location.href = "Login.html";
-    } catch (error) {
-      alert("Error: " + error.message);
-    } finally {
-      // Hide loading spinner
-      document.getElementById('loading').style.display = 'none';
-    }
-  });
-</script>
+            // Password validation
+            if (password.length < 6) {
+                alert("Password must be at least 6 characters long.");
+                return;
+            }
 
-<script>
-    // Check login status on page load
-    document.addEventListener("DOMContentLoaded", () => {
-        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-        if (token) {
-            document.getElementById("login-nav").style.display = "none";
-            document.getElementById("logout-nav").style.display = "inline-block";
+            // Show loading spinner
+            document.getElementById('loading').style.display = 'block';
+
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+                // Update profile with first and last name
+                await updateProfile(userCredential.user, {
+                    displayName: `${firstname} ${lastname}`
+                });
+
+                alert("Sign up successful!");
+                window.location.href = "Login.html";
+            } catch (error) {
+                if (error.code === 'auth/email-already-in-use') {
+                    alert("This email is already registered. Please use a different email.");
+                } else {
+                    alert("Error: " + error.message);
+                }
+            } finally {
+                // Hide loading spinner
+                document.getElementById('loading').style.display = 'none';
+            }
+        });
+    </script>
+
+    <script>
+        // Check login status on page load
+        document.addEventListener("DOMContentLoaded", () => {
+            const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+            if (token) {
+                document.getElementById("login-nav").style.display = "none";
+                document.getElementById("logout-nav").style.display = "inline-block";
+            }
+        });
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('token');
+            sessionStorage.removeItem('token');
+            alert("You have been logged out.");
+            window.location.href = 'Login.html'; // Redirect to Login page
         }
-    });
-
-    // Logout function
-    function logout() {
-        localStorage.removeItem('token');
-        sessionStorage.removeItem('token');
-        alert("You have been logged out.");
-        window.location.href = 'Login.html'; // Redirect to Login page
-    }
-</script>
-    
+    </script>
 </body>
 </html>
