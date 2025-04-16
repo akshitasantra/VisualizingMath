@@ -71,96 +71,75 @@
     </div>
     <!-- Add a loading spinner -->
     <div id="loading" style="display:none;">Loading...</div>
-
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js"></script>
-
+    
+    <!-- Firebase JS SDK -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    
+    <!-- Your custom JavaScript -->
     <script type="module">
-        // Your Firebase config
-        const firebaseConfig = {
+      // Initialize Firebase
+       const firebaseConfig = {
             apiKey: "AIzaSyAMPqEC7vmFh0Sm22KMmAVxaS_F7CI_YRM",
-              authDomain: "visualizing-math.firebaseapp.com",
-              projectId: "visualizing-math",
-              storageBucket: "visualizing-math.firebasestorage.app",
-              messagingSenderId: "128503124502",
-              appId: "1:128503124502:web:a5a5c786244e25c0af9b37",
-              measurementId: "G-7LGGDVLGLP"
+      authDomain: "visualizing-math.firebaseapp.com",
+      projectId: "visualizing-math",
+      storageBucket: "visualizing-math.firebasestorage.app",
+      messagingSenderId: "128503124502",
+      appId: "1:128503124502:web:a5a5c786244e25c0af9b37",
+      measurementId: "G-7LGGDVLGLP"
         };
+      const app = firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
 
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
+      document.getElementById('submit').addEventListener('click', async function(e) {
+          e.preventDefault();
+          
+          const email = document.getElementById('email').value;
+          const password = document.getElementById('password').value;
+          const firstname = document.getElementById('firstname').value;
+          const lastname = document.getElementById('lastname').value;
 
-        document.getElementById('submit').addEventListener('click', async function(e) {
-            e.preventDefault();
+          if (!firstname || !lastname || !email || !password) {
+              alert("All fields are required.");
+              return;
+          }
 
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const firstname = document.getElementById('firstname').value;
-            const lastname = document.getElementById('lastname').value;
+          // Simple email validation
+          const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+          if (!emailRegex.test(email)) {
+              alert("Please enter a valid email address.");
+              return;
+          }
 
-            if (!firstname || !lastname || !email || !password) {
-                alert("All fields are required.");
-                return;
-            }
+          // Password validation
+          if (password.length < 6) {
+              alert("Password must be at least 6 characters long.");
+              return;
+          }
 
-            // Simple email validation
-            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            if (!emailRegex.test(email)) {
-                alert("Please enter a valid email address.");
-                return;
-            }
+          // Show loading spinner
+          document.getElementById('loading').style.display = 'block';
 
-            // Password validation
-            if (password.length < 6) {
-                alert("Password must be at least 6 characters long.");
-                return;
-            }
+          try {
+              const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+              
+              // Update profile with first and last name
+              await userCredential.user.updateProfile({
+                  displayName: `${firstname} ${lastname}`
+              });
 
-            // Show loading spinner
-            document.getElementById('loading').style.display = 'block';
-
-            try {
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-
-                // Update profile with first and last name
-                await updateProfile(userCredential.user, {
-                    displayName: `${firstname} ${lastname}`
-                });
-
-                alert("Sign up successful!");
-                window.location.href = "Login.html";
-            } catch (error) {
-                if (error.code === 'auth/email-already-in-use') {
-                    alert("This email is already registered. Please use a different email.");
-                } else {
-                    alert("Error: " + error.message);
-                }
-            } finally {
-                // Hide loading spinner
-                document.getElementById('loading').style.display = 'none';
-            }
-        });
-    </script>
-
-    <script>
-        // Check login status on page load
-        document.addEventListener("DOMContentLoaded", () => {
-            const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-            if (token) {
-                document.getElementById("login-nav").style.display = "none";
-                document.getElementById("logout-nav").style.display = "inline-block";
-            }
-        });
-
-        // Logout function
-        function logout() {
-            localStorage.removeItem('token');
-            sessionStorage.removeItem('token');
-            alert("You have been logged out.");
-            window.location.href = 'Login.html'; // Redirect to Login page
-        }
+              alert("Sign up successful!");
+              window.location.href = "Login.html";
+          } catch (error) {
+              if (error.code === 'auth/email-already-in-use') {
+                  alert("This email is already registered. Please use a different email.");
+              } else {
+                  alert("Error: " + error.message);
+              }
+          } finally {
+              document.getElementById('loading').style.display = 'none';
+          }
+      });
     </script>
 </body>
 </html>
