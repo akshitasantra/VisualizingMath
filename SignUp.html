@@ -117,9 +117,6 @@
               return;
           }
 
-          // Show loading spinner
-          document.getElementById('loading').style.display = 'block';
-
           try {
               // Register new user with email and password
               const userCredential = await createUserWithEmailAndPassword(auth, email, password);
