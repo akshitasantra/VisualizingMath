@@ -145,9 +145,9 @@
         alert("You have been logged out.");
         window.location.href = 'Login.html'; // Redirect to Login page
     }
-<!-- Add these just before your custom Firebase code -->
-<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-analytics.js"></script>
+<!-- Firebase CDN -->
+<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-analytics-compat.js"></script>
 
 <script>
   // Your Firebase config
@@ -161,10 +161,11 @@
     measurementId: "G-7LGGDVLGLP"
   };
 
-  // Initialize Firebase
+  // Initialize Firebase (Compat mode)
   const app = firebase.initializeApp(firebaseConfig);
-  const analytics = firebase.analytics(app);
+  const analytics = firebase.analytics();
 </script>
+
 
 </body>
 </html>
