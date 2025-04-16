@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name ="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizing Math</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+      <section class="sub-header">
+        <nav> 
+            <a href="../index.html"><img src="../images/logo.png"></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fas fa-xmark" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="../index.html">HOME</a></li>
+                    <li><a href="../about.html">ABOUT</a></li>
+                    <li><a href="../SignUp.html">SIGN UP</a></li>
+                    <li id="login-nav"><a href="../Login.html">LOG IN</a></li>
+                    <li id="logout-nav" style="display: none;"><a href="#" onclick="logout()">LOG OUT</a></li>
+                    <li><a href="../Algebra.html">ALGEBRA</a></li>
+                    <li><a href="../Geometry.html">GEOMETRY</a></li>
+                </ul>
+            </div>
+            <i class="fas fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <h1>Difference of Squares</h1>
+</section>
+<!----- Understanding Polynomials Content ----->
+<section class="content">
+    <div class="container">
+        <h2>Summary</h2>
+        <p>Decide if a binomial can be written as the difference of two squares and, if possible, use the structure of a difference of two squares to rewrite the binomial.</p>
+        
+        <h2>Perfect Squares</h2>
+        <p>A <span class="highlight">perfect square</span> is a term that can be written as the product of a term with itself, or the square of a term.</p>
+        
+        <h3>Examples of Perfect Squares:</h3>
+        <ul>
+            <li>Integer Examples: 1, 4, 9, 16, 25, 36, ...</li>
+            <li>Variable Examples: x², y⁴, a⁶ (Any variable with an even exponent is a perfect square)</li>
+        </ul>
+        
+        <h2>Difference of Squares</h2>
+        <p>The <span class="highlight">difference of squares</span> states that the difference (subtraction) between two perfect squares can be written in the following form:</p>
+        
+        <p class="formula">a² - b² = (a - b)(a + b)</p>
+        
+        <h3>Examples:</h3>
+        <ul>
+            <li>x² - 9 = (x - 3)(x + 3)</li>
+            <li>4y² - 25 = (2y - 5)(2y + 5)</li>
+            <li>49a² - 64b² = (7a - 8b)(7a + 8b)</li>
+        </ul>
+        
+        <h3>Steps to Factor Using Difference of Squares:</h3>
+        <ol>
+            <li>Check if both terms are perfect squares.</li>
+            <li>Confirm that they are separated by subtraction.</li>
+            <li>Rewrite the expression using the formula <span class="formula">a² - b² = (a - b)(a + b)</span>.</li>
+        </ol>
+    </div>
+
+        <!-- Interactive Question Links with Integrated Icons -->
+        <div class="centered-content">    
+        <h2>Test Your Knowledge</h2>
+      <p>Click on the buttons below to try out interactive questions based on the content you've learned:</p>
+      <ul class="question-links">
+        <li>
+          <a href="Questions/q31.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 1: Identifying a Difference of Squares</span>
+          </a>
+        </li>
+        <li>
+          <a href="Questions/q32.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 2: Factoring a Difference of Squares</span>
+          </a>
+        </li>
+        <li>
+          <a href="Questions/q33.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 3: Recognizing Perfect Squares</span>
+          </a>
+        </li>
+        <li>
+          <a href="Questions/q34.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 4: Factoring a Complex Difference of Squares</span>
+          </a>
+        </li>
+        <li>
+          <a href="Questions/q35.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 5: Special Cases</span>
+          </a>
+        </li>
+        <li>
+          <a href="Questions/q36.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 6: Factoring a Polynomial with a Difference of Squares</span>
+          </a>
+        </li>
+          <a href="simplifying_radicals.html">
+            <span>Next Section →</span>
+        </a>
+      </ul>
+        </div>
+    </div>
+</section>
+    
+<!--------JavaScript for Toggle Menu-------->
+<script>
+    var navLinks = document.getElementById("navLinks");
+    function showMenu(){
+        navLinks.style.right = "0";
+    }
+    function hideMenu(){
+        navLinks.style.right = "-200px";
+    }
+</script>
+<!--------JavaScript for Saving Progress-------->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Select all question icons within the list
+    const questionLinks = document.querySelectorAll(".question-links li");
+
+    questionLinks.forEach((question, index) => {
+        const questionId = `q${index + 31}Correct`; // Matches localStorage key like "q1Correct"
+        const status = localStorage.getItem(questionId);
+        const icon = question.querySelector(".icon");
+
+        if (icon) {
+            if (status === "true") {
+                icon.classList.add("completed");
+            } else if (status === "false") {
+                icon.classList.add("incorrect");
+            }
+        }
+    });
+});
+</script>
+<script>
+    // Check login status on page load
+    document.addEventListener("DOMContentLoaded", () => {
+        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+        if (token) {
+            document.getElementById("login-nav").style.display = "none";
+            document.getElementById("logout-nav").style.display = "inline-block";
+        }
+    });
+
+    // Logout function
+    function logout() {
+        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
+        alert("You have been logged out.");
+        window.location.href = 'Login.html'; // Redirect to Login page
+    }
+</script>
+    <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "firebase/app";
+    import { getAnalytics } from "firebase/analytics";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyAMPqEC7vmFh0Sm22KMmAVxaS_F7CI_YRM",
+      authDomain: "visualizing-math.firebaseapp.com",
+      projectId: "visualizing-math",
+      storageBucket: "visualizing-math.firebasestorage.app",
+      messagingSenderId: "128503124502",
+      appId: "1:128503124502:web:a5a5c786244e25c0af9b37",
+      measurementId: "G-7LGGDVLGLP"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+</script>
+</body>
+</html>

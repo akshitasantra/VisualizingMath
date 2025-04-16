@@ -69,56 +69,58 @@
             </div>
         </div>
     </div>
-
+    <!-- Add a loading spinner -->
+    <div id="loading" style="display:none;">Loading...</div>
     <!-- JavaScript for Toggle Menu and Form Submission -->
-    <script>
-        // Toggle menu
-        var navLinks = document.getElementById("navLinks");
-        function showMenu() {
-            navLinks.style.right = "0";
-        }
-        function hideMenu() {
-            navLinks.style.right = "-200px";
-        }
+    <script type="module">
+  document.getElementById('submit').addEventListener('click', async function(e) {
+    e.preventDefault();
 
-        // Handle form submission
-        document.getElementById('submit').addEventListener('click', async function(e) {
-            e.preventDefault(); // Prevent the form from refreshing the page
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const firstname = document.getElementById('firstname').value;
+    const lastname = document.getElementById('lastname').value;
+    
+    if (!firstname || !lastname || !email || !password) {
+      alert("All fields are required.");
+      return;
+    }
 
-            // Get the form data
-            const firstname = document.getElementById('firstname').value;
-            const lastname = document.getElementById('lastname').value;
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const rememberMe = document.getElementById('register-check').checked;
+    // Simple email validation
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
 
-            // Create the data object
-            const data = { firstname, lastname, email, password, rememberMe };
+    // Password validation
+    if (password.length < 6) {
+      alert("Password must be at least 6 characters long.");
+      return;
+    }
 
-            // Send data to the backend (POST request to /signup)
-            try {
-                const response = await fetch('http://localhost:5000/signup', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data),
-                });
+    // Show loading spinner
+    document.getElementById('loading').style.display = 'block';
 
-                const result = await response.json();
-                if (response.ok) {
-                    alert(result.message); // Show success message
-                    // Redirect to login or another page
-                    window.location.href = 'Login.html';
-                } else {
-                    alert(result.message); // Show error message
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Something went wrong. Please try again.');
-            }
-        });
-    </script>
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      
+      // Update profile with first and last name
+      await updateProfile(userCredential.user, {
+        displayName: `${firstname} ${lastname}`
+      });
+
+      alert("Sign up successful!");
+      window.location.href = "Login.html";
+    } catch (error) {
+      alert("Error: " + error.message);
+    } finally {
+      // Hide loading spinner
+      document.getElementById('loading').style.display = 'none';
+    }
+  });
+</script>
+
 <script>
     // Check login status on page load
     document.addEventListener("DOMContentLoaded", () => {
@@ -137,6 +139,6 @@
         window.location.href = 'Login.html'; // Redirect to Login page
     }
 </script>
-
+    
 </body>
 </html>

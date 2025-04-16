@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name ="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizing Math</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+      <section class="sub-header">
+        <nav> 
+            <a href="../index.html"><img src="../images/logo.png"></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fas fa-xmark" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="../index.html">HOME</a></li>
+                    <li><a href="../about.html">ABOUT</a></li>
+                    <li><a href="../SignUp.html">SIGN UP</a></li>
+                    <li id="login-nav"><a href="../Login.html">LOG IN</a></li>
+                    <li id="logout-nav" style="display: none;"><a href="#" onclick="logout()">LOG OUT</a></li>
+                    <li><a href="../Algebra.html">ALGEBRA</a></li>
+                    <li><a href="../Geometry.html">GEOMETRY</a></li>
+                </ul>
+            </div>
+            <i class="fas fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <h1>Simplifying Radicals</h1>
+</section>
+<!----- Understanding Polynomials Content ----->
+<section class="content">
+    <div class="container">
+        <p>A radical is an expression that involves a root, such as a square root (√) or cube root (∛). Simplifying radicals means rewriting them in a more manageable form by removing perfect squares or cubes from under the radical.</p>
+
+        <h2>How to Simplify Radicals</h2>
+        <ol>
+            <li>Factor the number under the radical and identify perfect squares (or cubes).</li>
+            <li>Rewrite the radical by splitting it into two parts: a perfect square and another factor.</li>
+            <li>Simplify the perfect square or cube outside the radical.</li>
+            <li>Check your answer by squaring (or cubing) the simplified expression.</li>
+        </ol>
+
+        <h2>Examples</h2>
+
+        <div class="example">
+            <h3>Example 1: Square Roots</h3>
+            <p><strong>Problem:</strong> Simplify √98</p>
+            <p>Step 1: Factor 98 → 98 = 49 × 2 (since 49 is a perfect square).</p>
+            <p>Step 2: Rewrite: √(49 × 2) = √49 × √2</p>
+            <p>Step 3: Simplify: 7√2</p>
+            <p><strong>Final Answer:</strong> 7√2</p>
+        </div>
+
+        <div class="example">
+            <h3>Example 2: Cube Roots</h3>
+            <p><strong>Problem:</strong> Simplify ∛54</p>
+            <p>Step 1: Factor 54 → 54 = 27 × 2 (since 27 is a perfect cube).</p>
+            <p>Step 2: Rewrite: ∛(27 × 2) = ∛27 × ∛2</p>
+            <p>Step 3: Simplify: 3∛2</p>
+            <p><strong>Final Answer:</strong> 3∛2</p>
+        </div>
+
+        <!-- Interactive Question Links with Integrated Icons -->
+        <div class="centered-content">    
+        <h2>Test Your Knowledge</h2>
+      <p>Click on the buttons below to try out interactive questions based on the content you've learned:</p>
+      <ul class="question-links">
+        <li>
+          <a href="Questions/q37.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 1: Identifying a Perfect Square</span>
+          </a>
+        </li>
+        <li>
+          <a href="Questions/q38.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 2: Simplifying Square Roots</span>
+          </a>
+        </li>
+        <li>
+          <a href="Questions/q39.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 3: Simplifying Cube Roots</span>
+          </a>
+        </li>
+        <li>
+          <a href="Questions/q40.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 4: Recognizing Perfect Cubes</span>
+          </a>
+        </li>
+        <li>
+          <a href="Questions/q41.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 5: Simplifying Expressions with Variables</span>
+          </a>
+        </li>
+        <li>
+          <a href="Questions/q42.html" class="question-button">
+            <div class="icon">
+            </div>
+            <span>Question 6: Applying the Cube Root Rule</span>
+          </a>
+        </li>
+      </ul>
+        </div>
+    </div>
+</section>
+    
+<!--------JavaScript for Toggle Menu-------->
+<script>
+    var navLinks = document.getElementById("navLinks");
+    function showMenu(){
+        navLinks.style.right = "0";
+    }
+    function hideMenu(){
+        navLinks.style.right = "-200px";
+    }
+</script>
+<!--------JavaScript for Saving Progress-------->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Select all question icons within the list
+    const questionLinks = document.querySelectorAll(".question-links li");
+
+    questionLinks.forEach((question, index) => {
+        const questionId = `q${index + 37}Correct`; // Matches localStorage key like "q1Correct"
+        const status = localStorage.getItem(questionId);
+        const icon = question.querySelector(".icon");
+
+        if (icon) {
+            if (status === "true") {
+                icon.classList.add("completed");
+            } else if (status === "false") {
+                icon.classList.add("incorrect");
+            }
+        }
+    });
+});
+</script>
+<script>
+    // Check login status on page load
+    document.addEventListener("DOMContentLoaded", () => {
+        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+        if (token) {
+            document.getElementById("login-nav").style.display = "none";
+            document.getElementById("logout-nav").style.display = "inline-block";
+        }
+    });
+
+    // Logout function
+    function logout() {
+        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
+        alert("You have been logged out.");
+        window.location.href = 'Login.html'; // Redirect to Login page
+    }
+</script>
+    <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "firebase/app";
+    import { getAnalytics } from "firebase/analytics";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyAMPqEC7vmFh0Sm22KMmAVxaS_F7CI_YRM",
+      authDomain: "visualizing-math.firebaseapp.com",
+      projectId: "visualizing-math",
+      storageBucket: "visualizing-math.firebasestorage.app",
+      messagingSenderId: "128503124502",
+      appId: "1:128503124502:web:a5a5c786244e25c0af9b37",
+      measurementId: "G-7LGGDVLGLP"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+</script>
+</body>
+</html>
