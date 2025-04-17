@@ -131,7 +131,7 @@
 </script>
 <!--------JavaScript for Saving Progress-------->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
   import {
     getAuth,
     onAuthStateChanged,
@@ -172,8 +172,14 @@
       }
     }
   });
+    // Logout function
+    function logout() {
+        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
+        alert("You have been logged out.");
+        window.location.href = 'Login.html'; // Redirect to Login page
+    }
 </script>
-
 
 </body>
 </html>
