@@ -110,7 +110,6 @@
                 : '<p style="color:red">Incorrect. Try again.</p>';
             if (isCorrect) nextBtn.style.display = 'inline-block';
 
-            import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js';
 
         // Inside submit click event:
         onAuthStateChanged(auth, async (user) => {
