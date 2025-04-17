@@ -118,56 +118,72 @@
         </div>
     </div>
 </section>
-    
-<!--------JavaScript for Toggle Menu-------->
-<script>
-    var navLinks = document.getElementById("navLinks");
-    function showMenu(){
-        navLinks.style.right = "0";
-    }
-    function hideMenu(){
-        navLinks.style.right = "-200px";
-    }
-</script>
-<!--------JavaScript for Saving Progress-------->
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    // Select all question icons within the list
-    const questionLinks = document.querySelectorAll(".question-links li");
+<!-- Menu toggle script -->
+    <script>
+        const navLinks = document.getElementById("navLinks");
+        function showMenu() { navLinks.style.right = "0"; }
+        function hideMenu() { navLinks.style.right = "-200px"; }
+        window.showMenu = showMenu;
+        window.hideMenu = hideMenu;
+    </script>
 
-    questionLinks.forEach((question, index) => {
-        const questionId = `q${index + 31}Correct`; // Matches localStorage key like "q1Correct"
-        const status = localStorage.getItem(questionId);
-        const icon = question.querySelector(".icon");
+    <!-- Firebase + Auth + Firestore -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
-        if (icon) {
-            if (status === "true") {
-                icon.classList.add("completed");
-            } else if (status === "false") {
-                icon.classList.add("incorrect");
+        // Firebase config (verify storageBucket in console)
+        const firebaseConfig = {
+            apiKey: "AIzaSyAMPqEC7vmFh0Sm22KMmAVxaS_F7CI_YRM",
+            authDomain: "visualizing-math.firebaseapp.com",
+            projectId: "visualizing-math",
+            storageBucket: "visualizing-math.appspot.com",
+            messagingSenderId: "128503124502",
+            appId: "1:128503124502:web:a5a5c786244e25c0af9b37",
+            measurementId: "G-7LGGDVLGLP"
+        };
+
+        const app  = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db   = getFirestore(app);
+
+        const loginNav  = document.getElementById("login-nav");
+        const logoutNav = document.getElementById("logout-nav");
+
+        onAuthStateChanged(auth, async user => {
+            if (user) {
+                loginNav.style.display  = "none";
+                logoutNav.style.display = "inline-block";
+
+                // Fetch or initialize user's progress
+                const userRef = doc(db, "users", user.uid);
+                const snap    = await getDoc(userRef);
+                if (!snap.exists()) {
+                    await setDoc(userRef, { progress: {} });
+                }
+                const progress = (snap.exists() ? snap.data() : { progress: {} }).progress;
+
+                // Apply classes to icons
+                document.querySelectorAll(".question-links li").forEach((el, i) => {
+                    const qid  = `q${31 + i}Correct`;
+                    const icon = el.querySelector(".icon");
+                    if (icon && qid in progress) {
+                        icon.classList.add(progress[qid] ? "completed" : "incorrect");
+                    }
+                });
+            } else {
+                loginNav.style.display  = "inline-block";
+                logoutNav.style.display = "none";
             }
-        }
-    });
-});
-</script>
-<script>
-    // Check login status on page load
-    document.addEventListener("DOMContentLoaded", () => {
-        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-        if (token) {
-            document.getElementById("login-nav").style.display = "none";
-            document.getElementById("logout-nav").style.display = "inline-block";
-        }
-    });
+        });
 
-    // Logout function
-    function logout() {
-        localStorage.removeItem('token');
-        sessionStorage.removeItem('token');
-        alert("You have been logged out.");
-        window.location.href = 'Login.html'; // Redirect to Login page
-    }
-</script>
-
+        function logout() {
+            signOut(auth).then(() => {
+                window.location.href = "Login.html";
+            });
+        }
+        window.logout = logout;
+    </script>
 </body>
 </html>
