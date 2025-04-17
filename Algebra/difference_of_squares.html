@@ -119,58 +119,68 @@
     </div>
 </section>
 <!-- Menu toggle script -->
-    <script>
-        const navLinks = document.getElementById("navLinks");
-        function showMenu() { navLinks.style.right = "0"; }
-        function hideMenu() { navLinks.style.right = "-200px"; }
-        window.showMenu = showMenu;
-        window.hideMenu = hideMenu;
-    </script>
-
-    <!-- Firebase + Auth + Firestore -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+  import {
+    getAuth,
+    onAuthStateChanged,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+  import {
+    getFirestore,
+    doc,
+    getDoc,
+    setDoc
+  } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
-        // Firebase config (verify storageBucket in console)
-        const firebaseConfig = {
-            apiKey: "AIzaSyAMPqEC7vmFh0Sm22KMmAVxaS_F7CI_YRM",
-            authDomain: "visualizing-math.firebaseapp.com",
-            projectId: "visualizing-math",
-            storageBucket: "visualizing-math.appspot.com",
-            messagingSenderId: "128503124502",
-            appId: "1:128503124502:web:a5a5c786244e25c0af9b37",
-            measurementId: "G-7LGGDVLGLP"
-        };
+  // 1) Firebase config & init
+  const firebaseConfig = {
+    apiKey: "AIzaSyAMPqEC7vmFh0Sm22KMmAVxaS_F7CI_YRM",
+    authDomain: "visualizing-math.firebaseapp.com",
+    projectId: "visualizing-math",
+    storageBucket: "visualizing-math.appspot.com",
+    messagingSenderId: "128503124502",
+    appId: "1:128503124502:web:a5a5c786244e25c0af9b37",
+    measurementId: "G-7LGGDVLGLP"
+  };
+  const app  = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db   = getFirestore(app);
 
-        const app  = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db   = getFirestore(app);
-
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
-
-  const auth = getAuth();
-
-  // Toggle nav links based solely on Firebase Auth state
+  // 2) Grab your nav items
   const loginNav  = document.getElementById("login-nav");
   const logoutNav = document.getElementById("logout-nav");
-  onAuthStateChanged(auth, user => {
-    loginNav.style.display  = user ? "none" : "inline-block";
-    logoutNav.style.display = user ? "inline-block" : "none";
+
+  // 3) Only Firebase controls visibility
+  onAuthStateChanged(auth, async user => {
+    if (user) {
+      loginNav.style.display  = "none";
+      logoutNav.style.display = "inline-block";
+
+      // optional: fetch/create user progress here...
+      const userRef = doc(db, "users", user.uid);
+      const snap    = await getDoc(userRef);
+      if (!snap.exists()) {
+        await setDoc(userRef, { progress: {} });
+      }
+      // …and apply your icons…
+    } else {
+      loginNav.style.display  = "inline-block";
+      logoutNav.style.display = "none";
+    }
   });
 
-  // Fully sign out of Firebase (not just your own token)
-  async function logout() {
+  // 4) Clean Firebase logout
+  window.logout = async function() {
     try {
       await signOut(auth);
-      // now auth.currentUser is null → onAuthStateChanged will hide logoutNav
+      // onAuthStateChanged will fire with user === null now
       window.location.href = "Login.html";
-    } catch (e) {
-      console.error("Error signing out:", e);
+    } catch (err) {
+      console.error("Error signing out:", err);
     }
-  }
-  window.logout = logout;
-    </script>
+  };
+</script>
+
 </body>
 </html>
