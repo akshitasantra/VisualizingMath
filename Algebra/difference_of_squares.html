@@ -131,7 +131,7 @@
 </script>
 <!--------JavaScript for Saving Progress-------->
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
   import {
     getAuth,
     onAuthStateChanged,
@@ -140,51 +140,40 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebas
   import {
     getFirestore,
     doc,
-    getDoc,
-    setDoc,
-    updateDoc
+    getDoc
   } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
-  // 1) Your Firebase config
   const firebaseConfig = {
-      apiKey: "AIzaSyAMPqEC7vmFh0Sm22KMmAVxaS_F7CI_YRM",
-      authDomain: "visualizing-math.firebaseapp.com",
-      projectId: "visualizing-math",
-      storageBucket: "visualizing-math.firebasestorage.app",
-      messagingSenderId: "128503124502",
-      appId: "1:128503124502:web:a5a5c786244e25c0af9b37",
-      measurementId: "G-7LGGDVLGLP"
-    };
+    apiKey: "AIzaSyAMPqEC7vmFh0Sm22KMmAVxaS_F7CI_YRM",
+    authDomain: "visualizing-math.firebaseapp.com",
+    projectId: "visualizing-math",
+    storageBucket: "visualizing-math.firebasestorage.app",
+    messagingSenderId: "128503124502",
+    appId: "1:128503124502:web:a5a5c786244e25c0af9b37",
+    measurementId: "G-7LGGDVLGLP"
+  };
 
-  // 2) Init
   const app  = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db   = getFirestore(app);
-  document.querySelectorAll(".question-links li").forEach((el, i) => {
-        const qid  = `q${31 + i}Correct`;
-        const icon = el.querySelector(".icon");
-        if (!icon || data[qid] == null) return;
-        icon.classList.add(data[qid] ? "completed" : "incorrect");
-      });
-</script>
-<script>
-    // Check login status on page load
-    document.addEventListener("DOMContentLoaded", () => {
-        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-        if (token) {
-            document.getElementById("login-nav").style.display = "none";
-            document.getElementById("logout-nav").style.display = "inline-block";
-        }
-    });
 
-    // Logout function
-    function logout() {
-        localStorage.removeItem('token');
-        sessionStorage.removeItem('token');
-        alert("You have been logged out.");
-        window.location.href = 'Login.html'; // Redirect to Login page
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      const userRef = doc(db, "users", user.uid);
+      const docSnap = await getDoc(userRef);
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        document.querySelectorAll(".question-links li").forEach((el, i) => {
+          const qid = `q${31 + i}Correct`;
+          const icon = el.querySelector(".icon");
+          if (!icon || data[qid] == null) return;
+          icon.classList.add(data[qid] ? "completed" : "incorrect");
+        });
+      }
     }
+  });
 </script>
+
 
 </body>
 </html>
