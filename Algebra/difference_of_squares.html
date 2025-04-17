@@ -71,42 +71,42 @@
       <ul class="question-links">
         <li>
           <a href="Questions/q31.html" class="question-button">
-            <div class="icon">
+            <div class="icon" data-question="q31">
             </div>
             <span>Question 1: Identifying a Difference of Squares</span>
           </a>
         </li>
         <li>
           <a href="Questions/q32.html" class="question-button">
-            <div class="icon">
+            <div class="icon" data-question="q31">
             </div>
             <span>Question 2: Factoring a Difference of Squares</span>
           </a>
         </li>
         <li>
           <a href="Questions/q33.html" class="question-button">
-            <div class="icon">
+            <div class="icon" data-question="q31">
             </div>
             <span>Question 3: Recognizing Perfect Squares</span>
           </a>
         </li>
         <li>
           <a href="Questions/q34.html" class="question-button">
-            <div class="icon">
+            <div class="icon" data-question="q31">
             </div>
             <span>Question 4: Factoring a Complex Difference of Squares</span>
           </a>
         </li>
         <li>
           <a href="Questions/q35.html" class="question-button">
-            <div class="icon">
+            <div class="icon" data-question="q31">
             </div>
             <span>Question 5: Special Cases</span>
           </a>
         </li>
         <li>
           <a href="Questions/q36.html" class="question-button">
-            <div class="icon">
+            <div class="icon" data-question="q31">
             </div>
             <span>Question 6: Factoring a Polynomial with a Difference of Squares</span>
           </a>
@@ -160,31 +160,33 @@
 
     // watch auth state
     onAuthStateChanged(auth, async user => {
-      const loginNav  = document.getElementById("login-nav");
-      const logoutNav = document.getElementById("logout-nav");
+  const loginNav  = document.getElementById("login-nav");
+  const logoutNav = document.getElementById("logout-nav");
 
-      if (user) {
-        // show/hide nav items
-        loginNav.style.display  = "none";
-        logoutNav.style.display = "inline-block";
+  console.log("Auth state changed. User is:", user);
 
-        // fetch this user's saved progress
-        const snap = await getDoc(doc(db, "progress", user.uid));
-        if (snap.exists()) {
-          const data = snap.data();
-          // for each icon with a data-question attr...
-          document.querySelectorAll(".icon[data-question]").forEach(el => {
-            const key = el.dataset.question;
-            if (data[key] === true)  el.classList.add("completed");
-            if (data[key] === false) el.classList.add("incorrect");
-          });
-        }
-      } else {
-        // not signed in
-        loginNav.style.display  = "inline-block";
-        logoutNav.style.display = "none";
-      }
-    });
+  if (user) {
+    console.log("Logged in user detected.");
+    loginNav.style.display  = "none";
+    logoutNav.style.display = "inline-block";
+    
+    const snap = await getDoc(doc(db, "progress", user.uid));
+    if (snap.exists()) {
+      const data = snap.data();
+      console.log("User progress data:", data);
+      document.querySelectorAll(".icon[data-question]").forEach(el => {
+        const key = el.dataset.question;
+        if (data[key] === true)  el.classList.add("completed");
+        if (data[key] === false) el.classList.add("incorrect");
+      });
+    }
+  } else {
+    console.log("No user is signed in.");
+    loginNav.style.display  = "inline-block";
+    logoutNav.style.display = "none";
+  }
+});
+
 
     // global logout
     window.logout = async () => {
