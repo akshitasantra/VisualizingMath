@@ -148,42 +148,29 @@
         const auth = getAuth(app);
         const db   = getFirestore(app);
 
-        const loginNav  = document.getElementById("login-nav");
-        const logoutNav = document.getElementById("logout-nav");
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
 
-        onAuthStateChanged(auth, async user => {
-            if (user) {
-                loginNav.style.display  = "none";
-                logoutNav.style.display = "inline-block";
+  const auth = getAuth();
 
-                // Fetch or initialize user's progress
-                const userRef = doc(db, "users", user.uid);
-                const snap    = await getDoc(userRef);
-                if (!snap.exists()) {
-                    await setDoc(userRef, { progress: {} });
-                }
-                const progress = (snap.exists() ? snap.data() : { progress: {} }).progress;
+  // Toggle nav links based solely on Firebase Auth state
+  const loginNav  = document.getElementById("login-nav");
+  const logoutNav = document.getElementById("logout-nav");
+  onAuthStateChanged(auth, user => {
+    loginNav.style.display  = user ? "none" : "inline-block";
+    logoutNav.style.display = user ? "inline-block" : "none";
+  });
 
-                // Apply classes to icons
-                document.querySelectorAll(".question-links li").forEach((el, i) => {
-                    const qid  = `q${31 + i}Correct`;
-                    const icon = el.querySelector(".icon");
-                    if (icon && qid in progress) {
-                        icon.classList.add(progress[qid] ? "completed" : "incorrect");
-                    }
-                });
-            } else {
-                loginNav.style.display  = "inline-block";
-                logoutNav.style.display = "none";
-            }
-        });
-
-        function logout() {
-            signOut(auth).then(() => {
-                window.location.href = "Login.html";
-            });
-        }
-        window.logout = logout;
+  // Fully sign out of Firebase (not just your own token)
+  async function logout() {
+    try {
+      await signOut(auth);
+      // now auth.currentUser is null → onAuthStateChanged will hide logoutNav
+      window.location.href = "Login.html";
+    } catch (e) {
+      console.error("Error signing out:", e);
+    }
+  }
+  window.logout = logout;
     </script>
 </body>
 </html>
