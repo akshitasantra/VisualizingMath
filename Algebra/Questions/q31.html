@@ -20,7 +20,8 @@
                     <li><a href="../../index.html">HOME</a></li>
                     <li><a href="../../about.html">ABOUT</a></li>
                     <li><a href="../../SignUp.html">SIGN UP</a></li>
-                    <li><a href="../../Login.html">LOG IN</a></li>
+                    <a id="login-nav" href="../../Login.html">LOG IN</a>
+                    <a id="logout-nav" href="javascript:void(0)" onclick="logout()" style="display:none;">LOG OUT</a>
                     <li><a href="../../Algebra.html">ALGEBRA</a></li>
                     <li><a href="../../Geometry.html">GEOMETRY</a></li>
                 </ul>
@@ -59,7 +60,7 @@
                 D) (x + 3)² 
             </label>
             
-            <button type="button" onclick="checkAnswer()">Submit Answer</button>
+            <button id="submitBtn" type="button">Submit Answer</button>
         </form>
         <div id="feedback"></div>
         <!-- Next Button (Initially Hidden) -->
@@ -90,7 +91,7 @@
 
         const loginNav  = document.getElementById('login-nav');
         const logoutNav = document.getElementById('logout-nav');
-        const submitBtn = document.getElementById('submitBtn');
+        const submitBtn = document.querySelector('form button');
         const feedback  = document.getElementById('feedback');
         const nextBtn   = document.getElementById('nextBtn');
 
