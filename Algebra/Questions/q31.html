@@ -64,7 +64,7 @@
         </form>
         <div id="feedback"></div>
         <!-- Next Button (Initially Hidden) -->
-        <a id="button" href="q32.html" style="display: none;">
+        <a id="nextBtn" href="q32.html" style="display: none;">
             <button>Next Question →</button>
         </a>
     </section>
@@ -89,28 +89,16 @@
         const auth = getAuth(app);
         const db   = getFirestore(app);
 
-        const loginNav  = document.getElementById('login-nav');
-        const logoutNav = document.getElementById('logout-nav');
         const submitBtn = document.querySelector('form button');
         const feedback  = document.getElementById('feedback');
         const nextBtn   = document.getElementById('nextBtn');
 
-        // Auth state listener for toggling login/logout
-        onAuthStateChanged(auth, user => {
-            if (user) {
-                loginNav.style.display  = 'none';
-                logoutNav.style.display = 'inline-block';
-            } else {
-                loginNav.style.display  = 'inline-block';
-                logoutNav.style.display = 'none';
-            }
-        });
-
-        // Logout helper
-        function logout() { signOut(auth).then(() => location.href = '../../Login.html'); }
-        window.logout = logout;
-
         // Submit answer handler
+        document.addEventListener("DOMContentLoaded", () => {
+        const submitBtn = document.querySelector('form button');
+        const feedback  = document.getElementById('feedback');
+        const nextBtn   = document.getElementById('button'); // ← fix this too, see below
+
         submitBtn.addEventListener('click', async () => {
             const form   = document.getElementById('questionForm');
             const choice = form.answer.value;
@@ -130,6 +118,8 @@
                 await updateDoc(userRef, { ['progress.q31Correct']: isCorrect });
             }
         });
+    });
+
     </script>
     <script>
     // Check login status on page load
