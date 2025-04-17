@@ -163,14 +163,15 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebas
       const docSnap = await getDoc(userRef);
       if (docSnap.exists()) {
         const data = docSnap.data();
-        const progress = data.progress || {};
         document.querySelectorAll(".question-links li").forEach((el, i) => {
-          const qid = `q${31 + i}Correct`;
+          const qid = q${31 + i}Correct;
           const icon = el.querySelector(".icon");
-          if (!icon || progress[qid] == null) return;
-          icon.classList.add(progress[qid] ? "completed" : "incorrect");
+          if (!icon || data[qid] == null) return;
+          icon.classList.add(data[qid] ? "completed" : "incorrect");
         });
-
+      }
+    }
+  });
     // Check login status on page load
     document.addEventListener("DOMContentLoaded", () => {
         const token = localStorage.getItem('token') || sessionStorage.getItem('token');
