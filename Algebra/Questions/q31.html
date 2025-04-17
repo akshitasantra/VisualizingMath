@@ -103,7 +103,7 @@
         const feedback  = document.getElementById('feedback');
         const nextBtn   = document.getElementById('nextBtn');
 
-        // Auth state listener
+        // Auth state listener for toggling login/logout
         onAuthStateChanged(auth, user => {
             if (user) {
                 loginNav.style.display  = 'none';
@@ -118,10 +118,10 @@
         function logout() { signOut(auth).then(() => location.href = '../../Login.html'); }
         window.logout = logout;
 
-        // Check & save answer
+        // Submit answer handler
         submitBtn.addEventListener('click', async () => {
-            const form    = document.getElementById('questionForm');
-            const choice  = form.answer.value;
+            const form   = document.getElementById('questionForm');
+            const choice = form.answer.value;
             if (!choice) {
                 feedback.innerHTML = '<p style="color:red">Please select an answer.</p>';
                 return;
@@ -135,9 +135,7 @@
             const user = auth.currentUser;
             if (user) {
                 const userRef = doc(db, 'users', user.uid);
-                await updateDoc(userRef, {
-                    ['progress.q31Correct']: isCorrect
-                });
+                await updateDoc(userRef, { ['progress.q31Correct']: isCorrect });
             }
         });
     </script>
