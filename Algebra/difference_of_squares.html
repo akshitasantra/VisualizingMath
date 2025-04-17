@@ -172,6 +172,14 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebas
       }
     }
   });
+    // Check login status on page load
+    document.addEventListener("DOMContentLoaded", () => {
+        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+        if (token) {
+            document.getElementById("login-nav").style.display = "none";
+            document.getElementById("logout-nav").style.display = "inline-block";
+        }
+    });
     // Logout function
     function logout() {
         localStorage.removeItem('token');
