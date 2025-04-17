@@ -101,17 +101,23 @@
 
     // Redirect if already logged in
     auth.onAuthStateChanged(user => {
-      if (user) {
-        // store token if desired
-        const token = user.xa || user._delegate?.accessToken;
-        if (document.getElementById('login-nav')) {
-          document.getElementById("login-nav").style.display = "none";
-          document.getElementById("logout-nav").style.display = "inline-block";
-        }
-        // redirect straight to Algebra
-        window.location.href = 'Algebra.html';
-      }
-    });
+  if (user) {
+    // Show logout, hide login
+    if (document.getElementById('login-nav')) {
+      document.getElementById("login-nav").style.display = "none";
+      document.getElementById("logout-nav").style.display = "inline-block";
+    }
+
+    // Only redirect if user didn't arrive from clicking "Log In"
+    const cameFromLoginClick = sessionStorage.getItem('cameFromLoginClick');
+    if (!cameFromLoginClick) {
+      window.location.href = 'Algebra.html';
+    } else {
+      sessionStorage.removeItem('cameFromLoginClick');
+    }
+  }
+});
+
 
     // Handle Sign‑In
     document.getElementById('submit').addEventListener('click', async e => {
