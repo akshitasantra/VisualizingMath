@@ -97,8 +97,6 @@
         document.addEventListener("DOMContentLoaded", () => {
         const submitBtn = document.querySelector('form button');
         const feedback  = document.getElementById('feedback');
-        const nextBtn   = document.getElementById('button'); // ← fix this too, see below
-
         submitBtn.addEventListener('click', async () => {
             const form   = document.getElementById('questionForm');
             const choice = form.answer.value;
@@ -108,15 +106,27 @@
             }
             const isCorrect = choice === 'B';
             feedback.innerHTML = isCorrect
-                ? '<p style="color:green">Correct!</p>'
+                ? '<p style="color:green">Correct!  x² - 9 is a difference of squares because both x² and 9 are perfect squares, and they are subtracted.</p>'
                 : '<p style="color:red">Incorrect. Try again.</p>';
             if (isCorrect) nextBtn.style.display = 'inline-block';
 
-            const user = auth.currentUser;
+            import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js';
+
+        // Inside submit click event:
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
                 const userRef = doc(db, 'users', user.uid);
-                await updateDoc(userRef, { ['progress.q31Correct']: isCorrect });
+                try {
+                    await updateDoc(userRef, { ['progress.q31Correct']: isCorrect });
+                    console.log("Progress updated successfully");
+                } catch (error) {
+                    console.error("Error updating progress:", error);
+                }
+            } else {
+                console.warn("No user is signed in.");
             }
+        });
+
         });
     });
 
