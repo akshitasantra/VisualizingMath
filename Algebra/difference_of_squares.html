@@ -161,7 +161,18 @@
     // watch auth state
     onAuthStateChanged(auth, async user => {
   const loginNav  = document.getElementById("login-nav");
-  const logoutNav = document.getElementById("logout-nav");
+  if (loginNav && logoutNav) {
+  if (user) {
+    loginNav.style.display = "none";
+    logoutNav.style.display = "inline-block";
+  } else {
+    loginNav.style.display = "inline-block";
+    logoutNav.style.display = "none";
+  }
+}
+console.log("loginNav:", loginNav);
+console.log("logoutNav:", logoutNav);
+
 
   console.log("Auth state changed. User is:", user);
 
