@@ -68,16 +68,7 @@
         </a>
     </section>
     
-<!-- Scripts -->
-    <script>
-        // Menu toggle
-        const navLinks = document.getElementById('navLinks');
-        function showMenu() { navLinks.style.right = '0'; }
-        function hideMenu() { navLinks.style.right = '-200px'; }
-        window.showMenu = showMenu;
-        window.hideMenu = hideMenu;
-    </script>
-
+    <!-- JavaScript for Toggle Menu and Question Interaction -->
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js';
         import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js';
@@ -139,6 +130,24 @@
             }
         });
     </script>
+    <script>
+    // Check login status on page load
+    document.addEventListener("DOMContentLoaded", () => {
+        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+        if (token) {
+            document.getElementById("login-nav").style.display = "none";
+            document.getElementById("logout-nav").style.display = "inline-block";
+        }
+    });
+
+    // Logout function
+    function logout() {
+        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
+        alert("You have been logged out.");
+        window.location.href = 'Login.html'; // Redirect to Login page
+    }
+</script>
 
 </body>
 </html>
