@@ -171,25 +171,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const userId = user.uid;
         try {
-            const userDoc = await db.collection("users").doc(userId).get();
-            const progress = userDoc.exists ? userDoc.data().progress || {} : {};
+        const userDoc = await db.collection("users").doc(user.uid).get();
+        const progress = userDoc.exists
+          ? userDoc.data().progress || {}
+          : {};
 
-            const questionLinks = document.querySelectorAll(".unit .question-icons .icon");
-
-            questionLinks.forEach((question, index) => {
-                const questionId = `q${index+1}Correct`;
-                const status = progress[questionId]; // true / false / undefined
-                if (status === true) {
-                    question.classList.add("completed");
-                } else if (status === false) {
-                    question.classList.add("incorrect");
-                }
-            });
-        } catch (error) {
-            console.error("Error fetching user progress:", error);
-        }
+        // Grab every question icon in document order:
+        const icons = document.querySelectorAll(
+          ".unit .question-icons .icon"
+        );
+        icons.forEach((icon, index) => {
+          // Build the exact key you used in Firestore:
+          const key = `q${index + 1}Correct`;
+          const status = progress[key];
+          if (status === true) {
+            icon.classList.add("completed");
+          } else if (status === false) {
+            icon.classList.add("incorrect");
+          }
+          // if undefined → leave as "not attempted"
+        });
+      } catch (err) {
+        console.error("Error fetching user progress:", err);
+      }
     });
-});
+  });
 </script>
 <script>
     // Check login status on page load
