@@ -177,7 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const questionLinks = document.querySelectorAll(".question-links li");
 
             questionLinks.forEach((question, index) => {
-                const questionId = `q${index + 31}Correct`;
+                const questionId = `q${index+1}Correct`;
                 const status = progress[questionId]; // true / false / undefined
                 const icon = question.querySelector(".icon");
 
