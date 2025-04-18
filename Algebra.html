@@ -10,6 +10,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
+    <script>
+      const firebaseConfig = {
+            apiKey: 'AIzaSyAMPqEC7vmFh0Sm22KMmAVxaS_F7CI_YRM',
+            authDomain: 'visualizing-math.firebaseapp.com',
+            projectId: 'visualizing-math',
+            storageBucket: 'visualizing-math.appspot.com',
+            messagingSenderId: '128503124502',
+            appId: '1:128503124502:web:a5a5c786244e25c0af9b37',
+            measurementId: 'G-7LGGDVLGLP'
+        };
+
+      firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
+      const db = firebase.firestore();
+    </script>
       <section class="sub-header">
         <nav> 
             <a href="index.html"><img src="images/logo.png"></a>
@@ -141,32 +156,8 @@
     }
 
 </script>
-<script type="module">
-        // Import Firebase SDK
-        <script src="https://www.gstatic.com/firebasejs/10.7.2/firebase-app-compat.js"></script>
-        <!-- Firebase Auth -->
-        <script src="https://www.gstatic.com/firebasejs/10.7.2/firebase-auth-compat.js"></script>
-        <!-- Firebase Firestore -->
-        <script src="https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore-compat.js"></script>
-
-        // Firebase config
-        const firebaseConfig = {
-          apiKey: "AIzaSyAMPqEC7vmFh0Sm22KMmAVxaS_F7CI_YRM",
-          authDomain: "visualizing-math.firebaseapp.com",
-          projectId: "visualizing-math",
-          storageBucket: "visualizing-math.firebasestorage.app",
-          messagingSenderId: "128503124502",
-          appId: "1:128503124502:web:a5a5c786244e25c0af9b37",
-          measurementId: "G-7LGGDVLGLP"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-
-        // Update question colors based on user data
-        document.addEventListener("DOMContentLoaded", () => {
+<script>
+document.addEventListener("DOMContentLoaded", () => {
     auth.onAuthStateChanged(async (user) => {
         if (!user) return;
 
@@ -178,7 +169,7 @@
             const questionLinks = document.querySelectorAll(".question-links li");
 
             questionLinks.forEach((question, index) => {
-                const questionId = `q${index}Correct`;
+                const questionId = `q${index + 31}Correct`;
                 const status = progress[questionId]; // true / false / undefined
                 const icon = question.querySelector(".icon");
 
@@ -197,7 +188,7 @@
         }
     });
 });
-    </script>
+</script>
 <script>
     // Check login status on page load
     document.addEventListener("DOMContentLoaded", () => {
