@@ -174,21 +174,15 @@ document.addEventListener("DOMContentLoaded", () => {
             const userDoc = await db.collection("users").doc(userId).get();
             const progress = userDoc.exists ? userDoc.data().progress || {} : {};
 
-            const questionLinks = document.querySelectorAll(".question-links li");
+            const questionLinks = document.querySelectorAll(".unit .question-icons .icon");
 
             questionLinks.forEach((question, index) => {
                 const questionId = `q${index+1}Correct`;
                 const status = progress[questionId]; // true / false / undefined
-                const icon = question.querySelector(".icon");
-
-                if (icon) {
-                    if (status === true) {
-                        icon.classList.add("completed");
-                        icon.innerHTML = '<i class="fas fa-check-circle" style="color:green;"></i>';
-                    } else if (status === false) {
-                        icon.classList.add("incorrect");
-                        icon.innerHTML = '<i class="fas fa-times-circle" style="color:red;"></i>';
-                    }
+                if (status === true) {
+                    icon.classList.add("completed");
+                } else if (status === false) {
+                    icon.classList.add("incorrect");
                 }
             });
         } catch (error) {
