@@ -180,9 +180,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 const questionId = `q${index+1}Correct`;
                 const status = progress[questionId]; // true / false / undefined
                 if (status === true) {
-                    icon.classList.add("completed");
+                    question.classList.add("completed");
                 } else if (status === false) {
-                    icon.classList.add("incorrect");
+                    question.classList.add("incorrect");
                 }
             });
         } catch (error) {
