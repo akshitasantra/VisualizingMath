@@ -143,9 +143,11 @@
 </script>
 <script type="module">
         // Import Firebase SDK
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        <script src="https://www.gstatic.com/firebasejs/10.7.2/firebase-app-compat.js"></script>
+        <!-- Firebase Auth -->
+        <script src="https://www.gstatic.com/firebasejs/10.7.2/firebase-auth-compat.js"></script>
+        <!-- Firebase Firestore -->
+        <script src="https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore-compat.js"></script>
 
         // Firebase config
         const firebaseConfig = {
@@ -160,29 +162,41 @@
 
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
 
         // Update question colors based on user data
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                const uid = user.uid;
-                const progressDoc = await getDoc(doc(db, "users", uid));
-                if (progressDoc.exists()) {
-                    const progress = progressDoc.data().progress || {};
-                    Object.entries(progress).forEach(([qid, status]) => {
-                        const icon = document.getElementById(qid);
-                        if (icon) {
-                            if (status === "correct") icon.style.backgroundColor = "green";
-                            else if (status === "incorrect") icon.style.backgroundColor = "red";
-                        }
-                    });
+        document.addEventListener("DOMContentLoaded", () => {
+    auth.onAuthStateChanged(async (user) => {
+        if (!user) return;
+
+        const userId = user.uid;
+        try {
+            const userDoc = await db.collection("users").doc(userId).get();
+            const progress = userDoc.exists ? userDoc.data().progress || {} : {};
+
+            const questionLinks = document.querySelectorAll(".question-links li");
+
+            questionLinks.forEach((question, index) => {
+                const questionId = `q${index}Correct`;
+                const status = progress[questionId]; // true / false / undefined
+                const icon = question.querySelector(".icon");
+
+                if (icon) {
+                    if (status === true) {
+                        icon.classList.add("completed");
+                        icon.innerHTML = '<i class="fas fa-check-circle" style="color:green;"></i>';
+                    } else if (status === false) {
+                        icon.classList.add("incorrect");
+                        icon.innerHTML = '<i class="fas fa-times-circle" style="color:red;"></i>';
+                    }
                 }
-                // Hide login, show logout
-                document.getElementById("login-nav").style.display = "none";
-                document.getElementById("logout-nav").style.display = "inline-block";
-            }
-        });
+            });
+        } catch (error) {
+            console.error("Error fetching user progress:", error);
+        }
+    });
+});
 <script>
     // Check login status on page load
     document.addEventListener("DOMContentLoaded", () => {
