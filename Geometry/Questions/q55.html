@@ -20,7 +20,8 @@
                     <li><a href="../../index.html">HOME</a></li>
                     <li><a href="../../about.html">ABOUT</a></li>
                     <li><a href="../../SignUp.html">SIGN UP</a></li>
-                    <li><a href="../../Login.html">LOG IN</a></li>
+                    <li id="login-nav"><a href="../../Login.html">LOG IN</a></li>
+                    <li id="logout-nav" style="display: none;"><a href="#" onclick="logout()">LOG OUT</a></li>
                     <li><a href="../../Algebra.html">ALGEBRA</a></li>
                     <li><a href="../../Geometry.html">GEOMETRY</a></li>
                 </ul>
@@ -60,81 +61,74 @@
                 D) The shape gets mirrored over an axis.
             </label>
             
-            <button type="button" onclick="checkAnswer()">Submit Answer</button>
+            <button id="submitBtn" type="button">Submit Answer</button>
         </form>
         <div id="feedback"></div>
         <!-- Next Button (Initially Hidden) -->
-        <a id="button" href="q56.html" style="display: none;">
+        <a id="nextBtn" href="q56.html" style="display: none;">
             <button>Next Question →</button>
         </a>
     </section>
     
     <!-- JavaScript for Toggle Menu and Question Interaction -->
-    <script>
-        var navLinks = document.getElementById("navLinks");
-        function showMenu(){
-            navLinks.style.right = "0";
-        }
-        function hideMenu(){
-            navLinks.style.right = "-200px";
-        }
-        
-        function checkAnswer() {
-            var form = document.getElementById('questionForm');
-            var feedback = document.getElementById('feedback');
-            var selected = form.answer.value;
-            var nextButton = document.getElementById('button');
-            
-            if (!selected) {
-                feedback.innerHTML = "<p style='color:red;'>Please select an answer before submitting.</p>";
+     <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js';
+        import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js';
+        import { getFirestore, doc, updateDoc } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js';
+
+        // Firebase config
+        const firebaseConfig = {
+            apiKey: 'AIzaSyAMPqEC7vmFh0Sm22KMmAVxaS_F7CI_YRM',
+            authDomain: 'visualizing-math.firebaseapp.com',
+            projectId: 'visualizing-math',
+            storageBucket: 'visualizing-math.appspot.com',
+            messagingSenderId: '128503124502',
+            appId: '1:128503124502:web:a5a5c786244e25c0af9b37',
+            measurementId: 'G-7LGGDVLGLP'
+        };
+        const app  = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db   = getFirestore(app);
+
+        const submitBtn = document.querySelector('form button');
+        const feedback  = document.getElementById('feedback');
+        const nextBtn   = document.getElementById('nextBtn');
+
+        // Submit answer handler
+        document.addEventListener("DOMContentLoaded", () => {
+        const submitBtn = document.querySelector('form button');
+        const feedback  = document.getElementById('feedback');
+        submitBtn.addEventListener('click', async () => {
+            const form   = document.getElementById('questionForm');
+            const choice = form.answer.value;
+            if (!choice) {
+                feedback.innerHTML = '<p style="color:red">Please select an answer.</p>';
                 return;
             }
-            
-            if(selected === "B") {
-                feedback.innerHTML = "<p style='color:green;'>Correct! When you translate a shape, you move it in one direction (up, down, left, or right) without changing its size, shape, or orientation.</p>";
-                // Set a flag so other pages can update the icon to green
-                localStorage.setItem("q55Correct", "true");
-                nextButton.style.display = "inline-block";
+            const isCorrect = choice === 'B';
+            feedback.innerHTML = isCorrect
+                ? "<p style='color:green;'>Correct! When you translate a shape, you move it in one direction (up, down, left, or right) without changing its size, shape, or orientation.</p>"
+                : '<p style="color:red">Incorrect. Try again.</p>';
+            if (isCorrect) nextBtn.style.display = 'inline-block';
+
+
+        // Inside submit click event:
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                const userRef = doc(db, 'users', user.uid);
+                try {
+                    await updateDoc(userRef, { ['progress.q55Correct']: isCorrect });
+                    console.log("Progress updated successfully");
+                } catch (error) {
+                    console.error("Error updating progress:", error);
+                }
             } else {
-                localStorage.setItem("q55Correct", "false");
-                feedback.innerHTML = "<p style='color:red;'>Incorrect. Please try again.</p>";
-            }
-        }
-        document.addEventListener("DOMContentLoaded", function() {
-            var q1Status = localStorage.getItem("q55Correct");
-
-            if (q1Status === "true") {
-                var q1Icon = document.querySelector(".question-button .icon");
-                if (q1Icon) {
-                    q1Icon.classList.add("completed");
-                }
-            } else if (q1Status === "false") {
-                var q1Icon = document.querySelector(".question-button .icon");
-                if (q1Icon) {
-                    q1Icon.classList.add("incorrect");
-                }
+                console.warn("No user is signed in.");
             }
         });
-            document.getElementById("questionForm").addEventListener("submit", function(event) {
-            event.preventDefault();
 
-            var selectedAnswer = document.querySelector('input[name="answer"]:checked');
-
-            if (!selectedAnswer) {
-                alert("Please select an answer!");
-                return;
-            }
-
-            var isCorrect = selectedAnswer.value === "B"; // Adjust based on correct answer
-            localStorage.setItem("q55Correct", isCorrect ? "true" : "false");
-
-            var resultMessage = document.createElement("p");
-            resultMessage.textContent = isCorrect ? "Correct!" : "Incorrect. Try again!";
-            resultMessage.style.color = isCorrect ? "green" : "red";
-
-            document.getElementById("questionForm").appendChild(resultMessage);
         });
-
+    });
 
     </script>
     <script>
