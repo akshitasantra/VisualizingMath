@@ -20,7 +20,8 @@
                     <li><a href="../../index.html">HOME</a></li>
                     <li><a href="../../about.html">ABOUT</a></li>
                     <li><a href="../../SignUp.html">SIGN UP</a></li>
-                    <li><a href="../../Login.html">LOG IN</a></li>
+                    <li id="login-nav"><a href="../../Login.html">LOG IN</a></li>
+                    <li id="logout-nav" style="display: none;"><a href="#" onclick="logout()">LOG OUT</a></li>
                     <li><a href="../../Algebra.html">ALGEBRA</a></li>
                     <li><a href="../../Geometry.html">GEOMETRY</a></li>
                 </ul>
@@ -60,11 +61,11 @@
                 D) (2x – 3)(2x – 3)
             </label>
             
-            <button type="button" onclick="checkAnswer()">Submit Answer</button>
+            <button id="submitBtn" type="button">Submit Answer</button>
         </form>
         <div id="feedback"></div>
         <!-- Next Button (Initially Hidden) -->
-        <a id="button" href="q12.html" style="display: none;">
+        <a id="nextBtn" href="q12.html" style="display: none;">
             <button>Next Question →</button>
         </a>
     </section>
