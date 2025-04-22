@@ -20,7 +20,8 @@
                     <li><a href="../../index.html">HOME</a></li>
                     <li><a href="../../about.html">ABOUT</a></li>
                     <li><a href="../../SignUp.html">SIGN UP</a></li>
-                    <li><a href="../../Login.html">LOG IN</a></li>
+                    <li id="login-nav"><a href="../../Login.html">LOG IN</a></li>
+                    <li id="logout-nav" style="display: none;"><a href="#" onclick="logout()">LOG OUT</a></li>
                     <li><a href="../../Algebra.html">ALGEBRA</a></li>
                     <li><a href="../../Geometry.html">GEOMETRY</a></li>
                 </ul>
@@ -60,79 +61,69 @@
                 D) SOH CAH TOA is a type of triangle
             </label>
             
-            <button type="button" onclick="checkAnswer()">Submit Answer</button>
+            <button id="submitBtn" type="button">Submit Answer</button>
         </form>
         <div id="feedback"></div>
     </section>
     
     <!-- JavaScript for Toggle Menu and Question Interaction -->
-    <script>
-        var navLinks = document.getElementById("navLinks");
-        function showMenu(){
-            navLinks.style.right = "0";
-        }
-        function hideMenu(){
-            navLinks.style.right = "-200px";
-        }
-        
-        function checkAnswer() {
-            var form = document.getElementById('questionForm');
-            var feedback = document.getElementById('feedback');
-            var selected = form.answer.value;
-            var nextButton = document.getElementById('button');
-            
-            if (!selected) {
-                feedback.innerHTML = "<p style='color:red;'>Please select an answer before submitting.</p>";
-                return;
-            }
-            
-            if(selected === "B") {
-                feedback.innerHTML = "<p style='color:green;'>Correct! Trigonometry is useful for finding missing sides or angles in right triangles, even if you only know one side and one angle.</p>";
-                // Set a flag so other pages can update the icon to green
-                localStorage.setItem("q78Correct", "true");
-                nextButton.style.display = "inline-block";
-            } else {
-                localStorage.setItem("q78Correct", "false");
-                feedback.innerHTML = "<p style='color:red;'>Incorrect. Please try again.</p>";
-            }
-        }
-        document.addEventListener("DOMContentLoaded", function() {
-            var q1Status = localStorage.getItem("q78Correct");
+    <script type="module">
+  import { initializeApp }         from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js';
+  import { getAuth }               from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js';
+  import { getFirestore, doc, updateDoc }
+                                    from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js';
 
-            if (q1Status === "true") {
-                var q1Icon = document.querySelector(".question-button .icon");
-                if (q1Icon) {
-                    q1Icon.classList.add("completed");
-                }
-            } else if (q1Status === "false") {
-                var q1Icon = document.querySelector(".question-button .icon");
-                if (q1Icon) {
-                    q1Icon.classList.add("incorrect");
-                }
-            }
-        });
-            document.getElementById("questionForm").addEventListener("submit", function(event) {
-            event.preventDefault();
+  // Firebase config
+  const firebaseConfig = {
+    apiKey: 'AIzaSyAMPqEC7vmFh0Sm22KMmAVxaS_F7CI_YRM',
+    authDomain: 'visualizing-math.firebaseapp.com',
+    projectId: 'visualizing-math',
+    storageBucket: 'visualizing-math.appspot.com',
+    messagingSenderId: '128503124502',
+    appId: '1:128503124502:web:a5a5c786244e25c0af9b37',
+    measurementId: 'G-7LGGDVLGLP'
+  };
 
-            var selectedAnswer = document.querySelector('input[name="answer"]:checked');
+  // Initialize
+  const app  = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db   = getFirestore(app);
 
-            if (!selectedAnswer) {
-                alert("Please select an answer!");
-                return;
-            }
+  document.addEventListener("DOMContentLoaded", () => {
+    const submitBtn = document.getElementById('submitBtn');
+    const feedback  = document.getElementById('feedback');
 
-            var isCorrect = selectedAnswer.value === "B"; // Adjust based on correct answer
-            localStorage.setItem("q78Correct", isCorrect ? "true" : "false");
+    submitBtn.addEventListener('click', async () => {
+      // 1) Get the answer
+      const choice = document.querySelector('input[name="answer"]:checked')?.value;
+      if (!choice) {
+        feedback.innerHTML = '<p style="color:red">Please select an answer.</p>';
+        return;
+      }
 
-            var resultMessage = document.createElement("p");
-            resultMessage.textContent = isCorrect ? "Correct!" : "Incorrect. Try again!";
-            resultMessage.style.color = isCorrect ? "green" : "red";
+      // 2) Check correctness
+      const isCorrect = choice === 'B';
+      feedback.innerHTML = isCorrect
+        ? "<p style='color:green;'>Correct! Trigonometry is useful for finding missing sides or angles in right triangles, even if you only know one side and one angle.</p>"
+        : '<p style="color:red">Incorrect. Try again.</p>';
 
-            document.getElementById("questionForm").appendChild(resultMessage);
-        });
+      // 3) Update Firestore
+      const user = auth.currentUser;
+      if (!user) {
+        console.warn("No user is signed in.");
+        return;
+      }
 
-
-    </script>
+      try {
+        const userRef = doc(db, 'users', user.uid);
+        await updateDoc(userRef, { ['progress.q78Correct']: isCorrect });
+        console.log("Progress updated successfully");
+      } catch (err) {
+        console.error("Error updating progress:", err);
+      }
+    });
+  });
+</script>
     <script>
     // Check login status on page load
     document.addEventListener("DOMContentLoaded", () => {
