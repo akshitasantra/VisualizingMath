@@ -72,16 +72,19 @@
     <!-- Firebase JS SDK -->
     <script type="module">
       // Import Firebase services using Firebase 9+ modular SDK
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-      import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-      import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+      import { initializeApp }   from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+        import { getAuth }          from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+        import { getFirestore }     from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+        import { createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+        import { doc, setDoc }      from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+
 
       // Your Firebase configuration (replace with your actual config values)
       const firebaseConfig = {
             apiKey: "AIzaSyAMPqEC7vmFh0Sm22KMmAVxaS_F7CI_YRM",
       authDomain: "visualizing-math.firebaseapp.com",
       projectId: "visualizing-math",
-      storageBucket: "visualizing-math.firebasestorage.app",
+      storageBucket: "visualizing-math.appspot.com",
       messagingSenderId: "128503124502",
       appId: "1:128503124502:web:a5a5c786244e25c0af9b37",
       measurementId: "G-7LGGDVLGLP"
