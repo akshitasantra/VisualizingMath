@@ -67,63 +67,63 @@
     
     <!-- JavaScript for Toggle Menu and Question Interaction -->
     <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js';
-        import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js';
-        import { getFirestore, doc, updateDoc } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js';
+  import { initializeApp }         from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js';
+  import { getAuth }               from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js';
+  import { getFirestore, doc, updateDoc }
+                                    from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js';
 
-        // Firebase config
-        const firebaseConfig = {
-            apiKey: 'AIzaSyAMPqEC7vmFh0Sm22KMmAVxaS_F7CI_YRM',
-            authDomain: 'visualizing-math.firebaseapp.com',
-            projectId: 'visualizing-math',
-            storageBucket: 'visualizing-math.appspot.com',
-            messagingSenderId: '128503124502',
-            appId: '1:128503124502:web:a5a5c786244e25c0af9b37',
-            measurementId: 'G-7LGGDVLGLP'
-        };
-        const app  = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db   = getFirestore(app);
+  // Firebase config
+  const firebaseConfig = {
+    apiKey: 'AIzaSyAMPqEC7vmFh0Sm22KMmAVxaS_F7CI_YRM',
+    authDomain: 'visualizing-math.firebaseapp.com',
+    projectId: 'visualizing-math',
+    storageBucket: 'visualizing-math.appspot.com',
+    messagingSenderId: '128503124502',
+    appId: '1:128503124502:web:a5a5c786244e25c0af9b37',
+    measurementId: 'G-7LGGDVLGLP'
+  };
 
-        const submitBtn = document.querySelector('form button');
-        const feedback  = document.getElementById('feedback');
+  // Initialize
+  const app  = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db   = getFirestore(app);
 
-        // Submit answer handler
-        document.addEventListener("DOMContentLoaded", () => {
-        const submitBtn = document.querySelector('form button');
-        const feedback  = document.getElementById('feedback');
-        submitBtn.addEventListener('click', async () => {
-            const form   = document.getElementById('questionForm');
-            const choice = form.answer.value;
-            if (!choice) {
-                feedback.innerHTML = '<p style="color:red">Please select an answer.</p>';
-                return;
-            }
-            const isCorrect = choice === 'A';
-            feedback.innerHTML = isCorrect
-                ? "<p style='color:green;'>Correct! 36 is the largest perfect square factor of 72 because 72 = 36 × 2, and √36 = 6.</p>"
-                : '<p style="color:red">Incorrect. Try again.</p>';
+  document.addEventListener("DOMContentLoaded", () => {
+    const submitBtn = document.getElementById('submitBtn');
+    const feedback  = document.getElementById('feedback');
 
+    submitBtn.addEventListener('click', async () => {
+      // 1) Get the answer
+      const choice = document.querySelector('input[name="answer"]:checked')?.value;
+      if (!choice) {
+        feedback.innerHTML = '<p style="color:red">Please select an answer.</p>';
+        return;
+      }
 
-        // Inside submit click event:
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                const userRef = doc(db, 'users', user.uid);
-                try {
-                    await updateDoc(userRef, { ['progress.q42Correct']: isCorrect });
-                    console.log("Progress updated successfully");
-                } catch (error) {
-                    console.error("Error updating progress:", error);
-                }
-            } else {
-                console.warn("No user is signed in.");
-            }
-        });
+      // 2) Check correctness
+      const isCorrect = choice === 'A';
+      feedback.innerHTML = isCorrect
+        ? "<p style='color:green;'>Correct! ∛(64x³y⁶) = 4xy² because 64→4, x³→x, y⁶→y².</p>"
+        : '<p style="color:red">Incorrect. Try again.</p>';
 
-        });
+      // 3) Update Firestore
+      const user = auth.currentUser;
+      if (!user) {
+        console.warn("No user is signed in.");
+        return;
+      }
+
+      try {
+        const userRef = doc(db, 'users', user.uid);
+        await updateDoc(userRef, { ['progress.q42Correct']: isCorrect });
+        console.log("Progress updated successfully");
+      } catch (err) {
+        console.error("Error updating progress:", err);
+      }
     });
+  });
+</script>
 
-    </script>
     <script>
     // Check login status on page load
     document.addEventListener("DOMContentLoaded", () => {
