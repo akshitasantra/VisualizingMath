@@ -118,23 +118,31 @@
           }
 
           try {
-              // Register new user with email and password
-              const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-              
-              // Update user profile with first and last name
-              await updateProfile(userCredential.user, {
-                  displayName: `${firstname} ${lastname}`
-              });
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
-              alert("Sign up successful!");
-              window.location.href = "Login.html";
-          } catch (error) {
-              if (error.code === 'auth/email-already-in-use') {
-                  alert("This email is already registered. Please use a different email.");
-              } else {
-                  alert("Error: " + error.message);
-              }
-          }
+            // Update display name
+            await updateProfile(userCredential.user, {
+                displayName: `${firstname} ${lastname}`
+            });
+
+            // Write to Firestore
+            await setDoc(doc(db, "users", userCredential.user.uid), {
+                firstname: firstname,
+                lastname: lastname,
+                email: email,
+                createdAt: new Date()
+            });
+
+            alert("Sign up successful!");
+            window.location.href = "Login.html";
+        } catch (error) {
+            if (error.code === 'auth/email-already-in-use') {
+                alert("This email is already registered. Please use a different email.");
+            } else {
+                alert("Error: " + error.message);
+            }
+        }
+
       });
     </script>
 </body>
