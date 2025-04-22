@@ -89,6 +89,7 @@
       // Initialize Firebase app
       const app = initializeApp(firebaseConfig);
       const auth = getAuth(app);
+      const db = getFirestore(app);
 
       // Handle the register action
       document.getElementById('submit').addEventListener('click', async function(e) {
@@ -128,6 +129,12 @@
  
                alert("Sign up successful!");
                window.location.href = "Login.html";
+              await setDoc(doc(db, "users", userCredential.user.uid), {
+                firstname: firstname,
+                lastname: lastname,
+                email: email,
+                createdAt: new Date()
+            });
            } catch (error) {
                if (error.code === 'auth/email-already-in-use') {
                    alert("This email is already registered. Please use a different email.");
