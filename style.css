@@ -16,9 +16,12 @@ nav{
     padding: 2% 6%;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
 }
 nav img{
     width: 150px;
+    max-width: 120px;      /* shrink logo */
+    height: auto;
 }
 .nav-links{
     flex: 1;
@@ -184,10 +187,13 @@ h2{
     background-size: cover;
     text-align: center;
     color: #fff;
+    padding: 1rem;
 }
 
 .sub-header h1{
     margin-top: 100px;
+    flex-basis: 100%;
+    font-size: 1.8rem;
 }
 
 .about-us{
