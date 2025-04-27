@@ -424,7 +424,7 @@ b {
     background-color: red !important;
     border: 1px solid #ccc;  
 }
-.icon.popup {
+.popup {
     display: none;
     position: absolute;
     background: white;
