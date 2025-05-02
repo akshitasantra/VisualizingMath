@@ -89,47 +89,66 @@
         const app  = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db   = getFirestore(app);
+        
+        async function writeProgress(questionId, isCorrect) {
+          const user = auth.currentUser;
+          if (user) {
+            const userRef = doc(db, "users", user.uid);
+            // merge into a "progress" map
+            await updateDoc(userRef, { [`progress.${questionId}`]: isCorrect });
+          } else {
+            localStorage.setItem(questionId, JSON.stringify(isCorrect));
+          }
+        }
+        
+        async function readAllProgress() {
+          const user = auth.currentUser;
+          if (user) {
+            const snap = await getDoc(doc(db, "users", user.uid));
+            return (snap.exists() && snap.data().progress) || {};
+          } else {
+            // collect all localStorage keys starting with "q"
+            const prog = {};
+            for (let i=0; i<100; i++) { // or max questions
+              const key = `q${i}Correct`;
+              const val = localStorage.getItem(key);
+              if (val !== null) prog[key] = JSON.parse(val);
+            }
+            return prog;
+          }
+        }
+        document.addEventListener("DOMContentLoaded", () => {
+          const form    = document.getElementById("questionForm");
+          const feedback= document.getElementById("feedback");
+          const nextBtn = document.getElementById("nextBtn");
+          const questionId = "q1Correct"; // change per page
 
-        const submitBtn = document.querySelector('form button');
-        const feedback  = document.getElementById('feedback');
-        const nextBtn   = document.getElementById('nextBtn');
+          // 3a) Load existing progress
+          onAuthStateChanged(auth, async user => {
+            const prog = await readAllProgress();
+            if (prog[questionId] === true) {
+              feedback.innerHTML = "<p style='color:green'>You already got this one!</p>";
+              nextBtn.style.display = "inline-block";
+            }
+          });
 
         // Submit answer handler
-        document.addEventListener("DOMContentLoaded", () => {
-        const submitBtn = document.querySelector('form button');
-        const feedback  = document.getElementById('feedback');
-        submitBtn.addEventListener('click', async () => {
-            const form   = document.getElementById('questionForm');
+                document.getElementById("submitBtn").addEventListener("click", async () => {
             const choice = form.answer.value;
             if (!choice) {
-                feedback.innerHTML = '<p style="color:red">Please select an answer.</p>';
-                return;
+              feedback.innerHTML = "<p style='color:red'>Please select an answer.</p>";
+              return;
             }
-            const isCorrect = choice === 'A';
+            const isCorrect = (choice === "A"); // adjust per page
             feedback.innerHTML = isCorrect
-                ? "<p style='color:green;'>Correct! A polynomial is an expression consisting of constants and variables combined using operations such as addition, subtraction, multiplication, and exponentiation.</p>"
-                : '<p style="color:red">Incorrect. Try again.</p>';
-            if (isCorrect) nextBtn.style.display = 'inline-block';
+              ? "<p style='color:green;'>Correct! A polynomial is an expression consisting of constants and variables combined using operations such as addition, subtraction, multiplication, and exponentiation.</p>"
+              : "<p style='color:red'>Incorrect. Try again.</p>";
+            if (isCorrect) nextBtn.style.display = "inline-block";
 
-
-        // Inside submit click event:
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                const userRef = doc(db, 'users', user.uid);
-                try {
-                    await updateDoc(userRef, { ['progress.q1Correct']: isCorrect });
-                    console.log("Progress updated successfully");
-                } catch (error) {
-                    console.error("Error updating progress:", error);
-                }
-            } else {
-                console.warn("No user is signed in.");
-            }
+            // persist
+            await writeProgress(questionId, isCorrect);
+          });
         });
-
-        });
-    });
-
     </script>
     <script>
     // Check login status on page load
