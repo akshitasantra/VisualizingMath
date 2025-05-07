@@ -275,27 +275,14 @@ document.addEventListener("DOMContentLoaded", () => {
  
      // Logout function
      function logout() {
-    // 1) Tell Firebase to sign out
-    firebase.auth().signOut()
-      .then(() => {
-        // 2) Now clear your own token markers
-        localStorage.removeItem('token');
-        sessionStorage.removeItem('token');
-        // 3) Reload so onAuthStateChanged() fires with user = null
-        window.location.reload();
-      })
-      .catch(err => {
-        console.error("Error during Firebase sign-out:", err);
-      });
-    questionItems.forEach((li, idx) => {
-      const icon = li.querySelector(".icon");
-      // wipe old state
-      icon.classList.remove("completed", "incorrect");
-      icon.innerHTML = ""; 
-      // then re‑apply based on new progress…
-    });
-
-  }
+      firebase.auth().signOut()
+        .then(() => {
+          localStorage.removeItem('token');
+          sessionStorage.removeItem('token');
+          window.location.reload();
+        })
+        .catch(err => console.error("Sign‑out error:", err));
+    }
  </script>
 </body>
 </html>
