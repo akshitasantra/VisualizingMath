@@ -205,30 +205,24 @@
         navLinks.style.right = "-200px";
     }
 </script>
-<!--------JavaScript for Saving Progress (with LocalStorage fallback)-------->
+<!--------JavaScript for Saving Progress -------->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  // Grab all the <li> elements under .question-links
   const questionItems = document.querySelectorAll(".question-links li");
 
-  // Helper: for signed‑out users, read localStorage keys q1Correct…q6Correct
   function readLocalProgress() {
     const prog = {};
     questionItems.forEach((_, idx) => {
       const key = `q${idx+1}Correct`;
       const raw = localStorage.getItem(key);
       if (raw !== null) {
-        try {
-          prog[key] = JSON.parse(raw);
-        } catch {
-          prog[key] = false;
-        }
+        try { prog[key] = JSON.parse(raw); }
+        catch { prog[key] = false; }
       }
     });
     return prog;
   }
 
-  // Once auth state is known, load either Firestore or LocalStorage
   firebase.auth().onAuthStateChanged(async user => {
     let progress = {};
 
@@ -238,21 +232,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const doc = await db.collection("users").doc(user.uid).get();
         progress = (doc.exists && doc.data().progress) || {};
       } catch (err) {
-        console.error("Error fetching Firestore progress:", err);
-        // fallback to local
+        console.error("Firestore error:", err);
         progress = readLocalProgress();
       }
     } else {
-      // --- Signed out: pull from LocalStorage ---
+      // --- Signed out: pull from localStorage ---
       progress = readLocalProgress();
     }
 
-    // Now update each icon
+    // Update all icons (or clear)
     questionItems.forEach((li, idx) => {
-      const qid   = `q${idx+1}Correct`;
-      const status = progress[qid];    // true, false, or undefined
+      const qid    = `q${idx+1}Correct`;
+      const status = progress[qid];
       const icon   = li.querySelector(".icon");
-
       if (!icon) return;
 
       if (status === true) {
