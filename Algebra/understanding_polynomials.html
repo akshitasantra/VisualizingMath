@@ -256,9 +256,11 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!icon) return;
 
       if (status === true) {
+        icon.classList.add("completed");
         icon.innerHTML = '<i class="fas fa-check-circle" style="color:green;"></i>';
       } else if (status === false) {
-        icon.innerHTML = '<i class="fas fa-times-circle"  style="color:red;"></i>';
+        icon.classList.add("incorrect");
+        icon.innerHTML = '<i class="fas fa-times-circle" style="color:red;"></i>';
       } else {
         // no entry—leave blank (or insert a neutral icon)
         icon.innerHTML = '';
