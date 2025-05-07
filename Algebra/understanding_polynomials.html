@@ -243,9 +243,13 @@ document.addEventListener("DOMContentLoaded", () => {
     // Update all icons (or clear)
     questionItems.forEach((li, idx) => {
       const qid    = `q${idx+1}Correct`;
-      const status = progress[qid];
+      const status = progress[qid];        // true, false, or undefined
       const icon   = li.querySelector(".icon");
       if (!icon) return;
+
+      // 1) Clear any old classes & markup
+      icon.classList.remove("completed", "incorrect");
+      icon.innerHTML = "";
 
       if (status === true) {
         icon.classList.add("completed");
@@ -253,9 +257,6 @@ document.addEventListener("DOMContentLoaded", () => {
       } else if (status === false) {
         icon.classList.add("incorrect");
         icon.innerHTML = '<i class="fas fa-times-circle" style="color:red;"></i>';
-      } else {
-        // no entry—leave blank (or insert a neutral icon)
-        icon.innerHTML = '';
       }
     });
   });
