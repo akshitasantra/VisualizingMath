@@ -95,7 +95,7 @@
             return;
           }
           const isCorrect = (choice === "A"); // or "C" on q2.html, etc.
-          await writeProgress(questionId, isCorrect);
+          await writeProgress(qid, isCorrect);
           fb.innerHTML = isCorrect
             ? "<p style='color:green;'>Correct! A polynomial is an expression consisting of constants and variables combined using operations such as addition, subtraction, multiplication, and exponentiation.</p>"
             : "<p style='color:red'>Incorrect. Try again.</p>";
