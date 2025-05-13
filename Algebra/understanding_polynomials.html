@@ -262,8 +262,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
-
-
  <script>
      // Check login status on page load
      document.addEventListener("DOMContentLoaded", () => {
@@ -276,14 +274,13 @@ document.addEventListener("DOMContentLoaded", () => {
  
      // Logout function
      function logout() {
-      firebase.auth().signOut()
-        .then(() => {
-          localStorage.removeItem('token');
-          sessionStorage.removeItem('token');
-          window.location.reload();
-        })
-        .catch(err => console.error("Sign‑out error:", err));
-    }
+         localStorage.removeItem('token');
+         sessionStorage.removeItem('token');
+         alert("You have been logged out.");
+         window.location.href = '../Login.html'; // Redirect to Login page
+     }
  </script>
+
+
 </body>
 </html>
