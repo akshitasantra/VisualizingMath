@@ -185,7 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Update all icons (or clear)
     questionItems.forEach((li, idx) => {
-      const qid    = `q${idx+1}Correct`;
+      const qid    = `q${idx+13}Correct`;
       const status = progress[qid];        // true, false, or undefined
       const icon   = li.querySelector(".icon");
       if (!icon) return;
