@@ -99,7 +99,7 @@
           const isCorrect = (choice === "B"); // or "C" on q2.html, etc.
           await writeProgress(qid, isCorrect);
           fb.innerHTML = isCorrect
-            ? '<p style="color:green;">Correct! Multiply each term in (x + 5) by each term in (x + 5):<br><br>x × x = x²<br>x × 5 = 5x<br>5 × x = 5x<br>5 × 5 = 25<br><br>Now, combine like terms: <br>x² + (5x + 5x) - 25 = <strong>x² + 10x + 25</strong></p>'
+            ? '<p style="color:green;">Correct! Multiply each term in (x + 5) by each term in (x + 5):<br><br>x × x = x²<br>x × 5 = 5x<br>5 × x = 5x<br>5 × 5 = 25<br><br>Now, combine like terms: <br>x² + (5x + 5x) + 25 = <strong>x² + 10x + 25</strong></p>'
             : "<p style='color:red'>Incorrect. Try again.</p>";
 
           if (isCorrect) {
