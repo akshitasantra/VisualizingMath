@@ -166,36 +166,68 @@
 </script>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-    auth.onAuthStateChanged(async (user) => {
-        if (!user) return;
+  // 1) Grab your icons once
+  const icons = document.querySelectorAll(".unit .question-icons .icon");
 
-        const userId = user.uid;
+  // 2) Helper to read localStorage for q1–qN
+  function readLocalProgress() {
+    const prog = {};
+    icons.forEach((_, idx) => {
+      const key = `q${idx + 1}Correct`;
+      const raw = localStorage.getItem(key);
+      if (raw !== null) {
         try {
-        const userDoc = await db.collection("users").doc(user.uid).get();
-        const progress = userDoc.exists
-          ? userDoc.data().progress || {}
-          : {};
-
-        // Grab every question icon in document order:
-        const icons = document.querySelectorAll(
-          ".unit .question-icons .icon"
-        );
-        icons.forEach((icon, index) => {
-          // Build the exact key you used in Firestore:
-          const key = `q${index + 1}Correct`;
-          const status = progress[key];
-          if (status === true) {
-            icon.classList.add("completed");
-          } else if (status === false) {
-            icon.classList.add("incorrect");
-          }
-          // if undefined → leave as "not attempted"
-        });
-      } catch (err) {
-        console.error("Error fetching user progress:", err);
+          prog[key] = JSON.parse(raw);
+        } catch {
+          prog[key] = false;
+        }
       }
     });
+    return prog;
+  }
+
+  // 3) Common renderer: wipe old state, then apply new
+  function renderProgress(progress) {
+    icons.forEach((icon, idx) => {
+      const key    = `q${idx + 1}Correct`;
+      const status = progress[key];  // true / false / undefined
+
+      icon.classList.remove("completed", "incorrect");
+      // you could also clear innerHTML if you're injecting icons
+      // icon.innerHTML = "";
+
+      if (status === true) {
+        icon.classList.add("completed");
+      } else if (status === false) {
+        icon.classList.add("incorrect");
+      }
+      // undefined → leave un-styled
+    });
+  }
+
+  // 4) Watch auth state
+  auth.onAuthStateChanged(async user => {
+    let progress = {};
+
+    if (user) {
+      // --- Signed in: pull from Firestore ---
+      try {
+        const userDoc = await db.collection("users").doc(user.uid).get();
+        progress = (userDoc.exists && userDoc.data().progress) || {};
+      } catch (err) {
+        console.error("Error fetching Firestore progress:", err);
+        // fallback to local if Firestore fails
+        progress = readLocalProgress();
+      }
+    } else {
+      // --- Signed out: read LocalStorage only ---
+      progress = readLocalProgress();
+    }
+
+    // 5) Finally render the icons
+    renderProgress(progress);
   });
+});
 </script>
 <script>
     // Check login status on page load
