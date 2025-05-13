@@ -178,7 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function readLocalProgress() {
     const prog = {};
     questionItems.forEach((_, idx) => {
-      const key = `q${idx+1}Correct`;
+      const key = `q${idx+19}Correct`;
       const raw = localStorage.getItem(key);
       if (raw !== null) {
         try { prog[key] = JSON.parse(raw); }
