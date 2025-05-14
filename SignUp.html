@@ -1,176 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Visualizing Math — Log In</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
-        integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <!-- Firebase compat libraries -->
-  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-analytics-compat.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizing Math</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
-  <section class="sub-header">
-    <nav>
-      <a href="index.html"><img src="images/logo.png" alt="Logo"></a>
-      <div class="nav-links" id="navLinks">
-        <i class="fas fa-xmark" onclick="hideMenu()"></i>
-        <ul>
-          <li><a href="index.html">HOME</a></li>
-          <li><a href="about.html">ABOUT</a></li>
-          <li><a href="SignUp.html">SIGN UP</a></li>
-          <li><a href="Algebra.html">ALGEBRA</a></li>
-          <li><a href="Geometry.html">GEOMETRY</a></li>
-        </ul>
-      </div>
-      <i class="fas fa-bars" onclick="showMenu()"></i>
-    </nav>
-    <h1>Log In</h1>
-  </section>
+    <section class="sub-header">
+        <nav> 
+            <a href="index.html"><img src="images/logo.png" alt="Logo"></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fas fa-xmark" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="about.html">ABOUT</a></li>
+                    <li><a href="SignUp.html">SIGN UP</a></li>
+                    <li id="login-nav"><a href="Login.html">LOG IN</a></li>
+                    <li id="logout-nav" style="display: none;"><a href="#" onclick="logout()">LOG OUT</a></li>
+                    <li><a href="Algebra.html">ALGEBRA</a></li>
+                    <li><a href="Geometry.html">GEOMETRY</a></li>
+                </ul>
+            </div>
+            <i class="fas fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <h1>Sign Up</h1>
+    </section>
 
-  <div class="wrapper">
-    <div class="form-box">
-      <div class="register-container" id="register">
-        <div class="top">
-          <span>Don't have an account? <a href="SignUp.html">Sign Up</a></span>
+    <div class="wrapper">
+        <div class="form-box">
+            <div class="register-container" id="register">
+                <div class="top">
+                    <span>Have an account? <a href="Login.html">Login</a></span>
+                </div>
+                <div class="two-forms">
+                    <div class="input-box">
+                        <input type="text" id="firstname" class="input-field" placeholder="Firstname">
+                        <i class="bx bx-user"></i>
+                    </div>
+                    <div class="input-box">
+                        <input type="text" id="lastname" class="input-field" placeholder="Lastname">
+                        <i class="bx bx-user"></i>
+                    </div>
+                </div>
+                <div class="input-box">
+                    <input type="email" id="email" class="input-field" placeholder="Email">
+                    <i class="bx bx-envelope"></i>
+                </div>
+                <div class="input-box">
+                    <input type="password" id="password" class="input-field" placeholder="Password">
+                    <i class="bx bx-lock-alt"></i>
+                </div>
+                <div class="input-box">
+                    <input type="submit" id="submit" class="submit" value="Register">
+                </div>
+                <div class="two-col">
+                    <div class="one">
+                        <input type="checkbox" id="register-check">
+                        <label for="register-check"> Remember Me</label>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="input-box">
-          <input type="email" id="email" class="input-field" placeholder="Email">
-          <i class="bx bx-envelope"></i>
-        </div>
-        <div class="input-box">
-          <input type="password" id="password" class="input-field" placeholder="Password">
-          <i class="bx bx-lock-alt"></i>
-        </div>
-        <div class="input-box">
-          <input type="submit" id="submit" class="submit" value="Sign In">
-        </div>
-        <div class="two-col">
-          <div class="one">
-            <input type="checkbox" id="login-check">
-            <label for="login-check"> Remember Me</label>
-          </div>
-          <div class="two">
-            <label><a href="forgot-password.html"> Forgot password?</a></label>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
+    <!-- Firebase JS SDK -->
+    <script type="module">
+      // Import Firebase services using Firebase 9+ modular SDK
+      import { initializeApp }   from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+        import { getAuth }          from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+        import { getFirestore }     from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+        import { createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+        import { doc, setDoc }      from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 
-  <!-- Firebase & Page Logic -->
-  <script>
-    // Initialize Firebase
-    const firebaseConfig = {
-      apiKey: "AIzaSyAMPqEC7vmFh0Sm22KMmAVxaS_F7CI_YRM",
+
+      // Your Firebase configuration (replace with your actual config values)
+      const firebaseConfig = {
+            apiKey: "AIzaSyAMPqEC7vmFh0Sm22KMmAVxaS_F7CI_YRM",
       authDomain: "visualizing-math.firebaseapp.com",
       projectId: "visualizing-math",
-      storageBucket: "visualizing-math.firebasestorage.app",
+      storageBucket: "visualizing-math.appspot.com",
       messagingSenderId: "128503124502",
       appId: "1:128503124502:web:a5a5c786244e25c0af9b37",
       measurementId: "G-7LGGDVLGLP"
-    };
-    firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
-    const auth = firebase.auth();
+        };
 
-    // Menu toggle helpers
-    function showMenu() { document.getElementById("navLinks").style.right = "0"; }
-    function hideMenu() { document.getElementById("navLinks").style.right = "-200px"; }
+      // Initialize Firebase app
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
 
-    // Logout
-    function logout() {
-      auth.signOut().then(() => {
-        localStorage.removeItem('token');
-        sessionStorage.removeItem('token');
-        alert("Logged out!");
-        window.location.href = 'Login.html';
+      // Handle the register action
+      document.getElementById('submit').addEventListener('click', async function(e) {
+          e.preventDefault();
+          
+          const email = document.getElementById('email').value;
+          const password = document.getElementById('password').value;
+          const firstname = document.getElementById('firstname').value;
+          const lastname = document.getElementById('lastname').value;
+
+          if (!firstname || !lastname || !email || !password) {
+              alert("All fields are required.");
+              return;
+          }
+
+          // Simple email validation
+          const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+          if (!emailRegex.test(email)) {
+              alert("Please enter a valid email address.");
+              return;
+          }
+
+          // Password validation
+          if (password.length < 6) {
+              alert("Password must be at least 6 characters long.");
+              return;
+          }
+
+          try {
+               // Register new user with email and password
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+                // Update user profile with first and last name
+                await updateProfile(userCredential.user, {
+                    displayName: `${firstname} ${lastname}`
+                });
+
+                // ✅ Write user data to Firestore before redirect
+                await setDoc(doc(db, "users", userCredential.user.uid), {
+                    firstname: firstname,
+                    lastname: lastname,
+                    email: email,
+                    createdAt: new Date()
+                });
+
+                alert("Sign up successful!");
+                window.location.href = "Login.html";
+           } catch (error) {
+               if (error.code === 'auth/email-already-in-use') {
+                   alert("This email is already registered. Please use a different email.");
+               } else {
+                   alert("Error: " + error.message);
+               }
+           }
       });
-    }
-
-    // Redirect if already logged in
-    auth.onAuthStateChanged(async user => {
-  console.log("Auth state changed. User:", user);
-
-  const currentPage = window.location.pathname.split("/").pop();
-  const isLoginPage = currentPage === "Login.html" || currentPage === "login.html";
-  const cameFromLoginClick = sessionStorage.getItem("cameFromLoginClick");
-
-  if (user) {
-    try {
-      // This will throw an error if the token is invalid
-      const token = await user.getIdToken(true);
-      console.log("Valid token found:", token);
-
-      // Show/hide nav items
-      if (document.getElementById("login-nav")) {
-        document.getElementById("login-nav").style.display = "none";
-        document.getElementById("logout-nav").style.display = "inline-block";
-      }
-
-      if (!cameFromLoginClick && !isLoginPage) {
-        window.location.href = "Algebra.html";
-      } else {
-        sessionStorage.removeItem("cameFromLoginClick");
-      }
-    } catch (err) {
-      console.warn("Token invalid or expired. Logging out.");
-      auth.signOut();
-    }
-  } else {
-    // No user logged in — show login stuff as normal
-    if (document.getElementById("login-nav")) {
-      document.getElementById("login-nav").style.display = "inline-block";
-      document.getElementById("logout-nav").style.display = "none";
-    }
-  }
-});
-
-
-
-    // Handle Sign‑In
-    document.getElementById('submit').addEventListener('click', async e => {
-      e.preventDefault();
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
-      const rememberMe = document.getElementById('login-check').checked;
-
-      if (!email || !password) {
-        return alert("Please enter both email and password.");
-      }
-
-      try {
-        // 1) Choose persistence based on Remember Me:
-      await auth.setPersistence(
-        rememberMe
-          ? firebase.auth.Auth.Persistence.LOCAL      // survives browser restart
-          : firebase.auth.Auth.Persistence.SESSION    // only lasts until tab/window closes
-      );
-
-      // 2) Sign in:
-      const cred = await auth.signInWithEmailAndPassword(email, password);
-      alert("Login successful!");
-
-      // 3) Redirect to your protected page:
-      window.location.href = 'Algebra.html';
-
-    } catch (err) {
-      let msg = "Something went wrong.";
-      if (err.code === 'auth/user-not-found')   msg = "No user found. Please sign up.";
-      else if (err.code === 'auth/wrong-password') msg = "Wrong password.";
-      else if (err.code === 'auth/invalid-email')  msg = "Invalid email address.";
-      alert(msg);
-    }
-  });
-  </script>
+    </script>
 </body>
 </html>
