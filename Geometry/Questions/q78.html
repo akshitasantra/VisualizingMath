@@ -67,63 +67,42 @@
     </section>
     
     <!-- JavaScript for Toggle Menu and Question Interaction -->
+    <script type="module" src="../../progress.js"></script>
     <script type="module">
-  import { initializeApp }         from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js';
-  import { getAuth }               from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js';
-  import { getFirestore, doc, updateDoc }
-                                    from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js';
+      import { writeProgress, onProgressLoaded } from '../../progress.js';
 
-  // Firebase config
-  const firebaseConfig = {
-    apiKey: 'AIzaSyAMPqEC7vmFh0Sm22KMmAVxaS_F7CI_YRM',
-    authDomain: 'visualizing-math.firebaseapp.com',
-    projectId: 'visualizing-math',
-    storageBucket: 'visualizing-math.appspot.com',
-    messagingSenderId: '128503124502',
-    appId: '1:128503124502:web:a5a5c786244e25c0af9b37',
-    measurementId: 'G-7LGGDVLGLP'
-  };
+      const qid     = "q78Correct";    // ← change to "q2Correct" on q2.html, etc.
+      const form    = document.getElementById("questionForm");
+      const fb      = document.getElementById("feedback");
+      const nextBtn = document.getElementById("nextBtn");
 
-  // Initialize
-  const app  = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db   = getFirestore(app);
+      // 1) On load (and on auth‑change), show “already got” if saved:
+      onProgressLoaded(prog => {
+        if (prog[qid] === true) {
+          fb.innerHTML        = "<p style='color:green'>You already got this one!</p>";
+          nextBtn.style.display = "inline-block";
+        }
+      });
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const submitBtn = document.getElementById('submitBtn');
-    const feedback  = document.getElementById('feedback');
+      // 2) On submit, grade + persist + show next button:
+      document.getElementById("submitBtn")
+        .addEventListener("click", async () => {
+          const choice   = form.answer.value;
+          if (!choice) {
+            fb.innerHTML = "<p style='color:red'>Please select an answer.</p>";
+            return;
+          }
+          const isCorrect = (choice === "B"); // or "C" on q2.html, etc.
+          await writeProgress(qid, isCorrect);
+          fb.innerHTML = isCorrect
+            ? "<p style='color:green;'>Correct! Trigonometry is useful for finding missing sides or angles in right triangles, even if you only know one side and one angle.</p>"
+            : "<p style='color:red'>Incorrect. Try again.</p>";
 
-    submitBtn.addEventListener('click', async () => {
-      // 1) Get the answer
-      const choice = document.querySelector('input[name="answer"]:checked')?.value;
-      if (!choice) {
-        feedback.innerHTML = '<p style="color:red">Please select an answer.</p>';
-        return;
-      }
-
-      // 2) Check correctness
-      const isCorrect = choice === 'B';
-      feedback.innerHTML = isCorrect
-        ? "<p style='color:green;'>Correct! Trigonometry is useful for finding missing sides or angles in right triangles, even if you only know one side and one angle.</p>"
-        : '<p style="color:red">Incorrect. Try again.</p>';
-
-      // 3) Update Firestore
-      const user = auth.currentUser;
-      if (!user) {
-        console.warn("No user is signed in.");
-        return;
-      }
-
-      try {
-        const userRef = doc(db, 'users', user.uid);
-        await updateDoc(userRef, { ['progress.q78Correct']: isCorrect });
-        console.log("Progress updated successfully");
-      } catch (err) {
-        console.error("Error updating progress:", err);
-      }
-    });
-  });
-</script>
+          if (isCorrect) {
+            nextBtn.style.display = "inline-block";
+          }
+      });
+    </script>
     <script>
     // Check login status on page load
     document.addEventListener("DOMContentLoaded", () => {
@@ -139,9 +118,18 @@
         localStorage.removeItem('token');
         sessionStorage.removeItem('token');
         alert("You have been logged out.");
-        window.location.href = 'Login.html'; // Redirect to Login page
+        window.location.href = '../../Login.html'; // Redirect to Login page
     }
 </script>
-
+<!--------JavaScript for Toggle Menu-------->
+<script>
+    var navLinks = document.getElementById("navLinks");
+    function showMenu(){
+        navLinks.style.right = "0";
+    }
+    function hideMenu(){
+        navLinks.style.right = "-200px";
+    }
+</script>
 </body>
 </html>
