@@ -170,35 +170,58 @@
 <!--------JavaScript for Saving Progress-------->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-    auth.onAuthStateChanged(async (user) => {
-        if (!user) return;
+  const questionItems = document.querySelectorAll(".question-links li");
 
-        const userId = user.uid;
-        try {
-            const userDoc = await db.collection("users").doc(userId).get();
-            const progress = userDoc.exists ? userDoc.data().progress || {} : {};
-
-            const questionLinks = document.querySelectorAll(".question-links li");
-
-            questionLinks.forEach((question, index) => {
-                const questionId = `q${index + 31}Correct`;
-                const status = progress[questionId]; // true / false / undefined
-                const icon = question.querySelector(".icon");
-
-                if (icon) {
-                    if (status === true) {
-                        icon.classList.add("completed");
-                        icon.innerHTML = '<i class="fas fa-check-circle" style="color:green;"></i>';
-                    } else if (status === false) {
-                        icon.classList.add("incorrect");
-                        icon.innerHTML = '<i class="fas fa-times-circle" style="color:red;"></i>';
-                    }
-                }
-            });
-        } catch (error) {
-            console.error("Error fetching user progress:", error);
-        }
+  function readLocalProgress() {
+    const prog = {};
+    questionItems.forEach((_, idx) => {
+      const key = `q${idx+41}Correct`;
+      const raw = localStorage.getItem(key);
+      if (raw !== null) {
+        try { prog[key] = JSON.parse(raw); }
+        catch { prog[key] = false; }
+      }
     });
+    return prog;
+  }
+
+  firebase.auth().onAuthStateChanged(async user => {
+    let progress = {};
+
+    if (user) {
+      // --- Signed in: pull from Firestore ---
+      try {
+        const doc = await db.collection("users").doc(user.uid).get();
+        progress = (doc.exists && doc.data().progress) || {};
+      } catch (err) {
+        console.error("Firestore error:", err);
+        progress = readLocalProgress();
+      }
+    } else {
+      // --- Signed out: pull from localStorage ---
+      progress = readLocalProgress();
+    }
+
+    // Update all icons (or clear)
+    questionItems.forEach((li, idx) => {
+      const qid    = `q${idx+41}Correct`;
+      const status = progress[qid];        // true, false, or undefined
+      const icon   = li.querySelector(".icon");
+      if (!icon) return;
+
+      // 1) Clear any old classes & markup
+      icon.classList.remove("completed", "incorrect");
+      icon.innerHTML = "";
+
+      if (status === true) {
+        icon.classList.add("completed");
+        icon.innerHTML = '<i class="fas fa-check-circle" style="color:green;"></i>';
+      } else if (status === false) {
+        icon.classList.add("incorrect");
+        icon.innerHTML = '<i class="fas fa-times-circle" style="color:red;"></i>';
+      }
+    });
+  });
 });
 </script>
 <script>
