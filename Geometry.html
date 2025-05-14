@@ -161,7 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function readLocalProgress() {
     const prog = {};
     icons.forEach((_, idx) => {
-      const key = `q${idx + 1}Correct`;
+      const key = `q${idx + 41}Correct`;
       const raw = localStorage.getItem(key);
       if (raw !== null) {
         try {
@@ -177,7 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 3) Common renderer: wipe old state, then apply new
   function renderProgress(progress) {
     icons.forEach((icon, idx) => {
-      const key    = `q${idx + 43}Correct`;
+      const key    = `q${idx + 41}Correct`;
       const status = progress[key];  // true / false / undefined
 
       icon.classList.remove("completed", "incorrect");
