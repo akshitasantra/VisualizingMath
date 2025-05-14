@@ -175,7 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function readLocalProgress() {
     const prog = {};
     questionItems.forEach((_, idx) => {
-      const key = `q${idx+41}Correct`;
+      const key = `q${idx+43}Correct`;
       const raw = localStorage.getItem(key);
       if (raw !== null) {
         try { prog[key] = JSON.parse(raw); }
@@ -204,7 +204,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Update all icons (or clear)
     questionItems.forEach((li, idx) => {
-      const qid    = `q${idx+41}Correct`;
+      const qid    = `q${idx+43}Correct`;
       const status = progress[qid];        // true, false, or undefined
       const icon   = li.querySelector(".icon");
       if (!icon) return;
