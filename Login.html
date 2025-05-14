@@ -149,22 +149,28 @@
       }
 
       try {
-        const cred = await auth.signInWithEmailAndPassword(email, password);
-        alert("Login successful!");
+        // 1) Choose persistence based on Remember Me:
+      await auth.setPersistence(
+        rememberMe
+          ? firebase.auth.Auth.Persistence.LOCAL      // survives browser restart
+          : firebase.auth.Auth.Persistence.SESSION    // only lasts until tab/window closes
+      );
 
-        // Persist token
-        const token = cred.user.xa || cred.user._delegate?.accessToken;
-        if (rememberMe) localStorage.setItem('token', token);
-        else sessionStorage.setItem('token', token);
+      // 2) Sign in:
+      const cred = await auth.signInWithEmailAndPassword(email, password);
+      alert("Login successful!");
 
-        window.location.href = 'Algebra.html';
-      } catch (err) {
-        let msg = "Something went wrong.";
-        if (err.code === 'auth/user-not-found') msg = "No user found. Please sign up.";
-        else if (err.code === 'auth/wrong-password') msg = "Wrong password.";
-        alert(msg);
-      }
-    });
+      // 3) Redirect to your protected page:
+      window.location.href = 'Algebra.html';
+
+    } catch (err) {
+      let msg = "Something went wrong.";
+      if (err.code === 'auth/user-not-found')   msg = "No user found. Please sign up.";
+      else if (err.code === 'auth/wrong-password') msg = "Wrong password.";
+      else if (err.code === 'auth/invalid-email')  msg = "Invalid email address.";
+      alert(msg);
+    }
+  });
   </script>
 </body>
 </html>
