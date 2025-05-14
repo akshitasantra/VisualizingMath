@@ -70,65 +70,41 @@
     </section>
     
     <!-- JavaScript for Toggle Menu and Question Interaction -->
+    <script type="module" src="../../progress.js"></script>
     <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js';
-        import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js';
-        import { getFirestore, doc, updateDoc } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js';
+      import { writeProgress, onProgressLoaded } from '../../progress.js';
 
-        // Firebase config
-        const firebaseConfig = {
-            apiKey: 'AIzaSyAMPqEC7vmFh0Sm22KMmAVxaS_F7CI_YRM',
-            authDomain: 'visualizing-math.firebaseapp.com',
-            projectId: 'visualizing-math',
-            storageBucket: 'visualizing-math.appspot.com',
-            messagingSenderId: '128503124502',
-            appId: '1:128503124502:web:a5a5c786244e25c0af9b37',
-            measurementId: 'G-7LGGDVLGLP'
-        };
-        const app  = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db   = getFirestore(app);
+      const qid     = "q34Correct";    // ← change to "q2Correct" on q2.html, etc.
+      const form    = document.getElementById("questionForm");
+      const fb      = document.getElementById("feedback");
+      const nextBtn = document.getElementById("nextBtn");
 
-        const submitBtn = document.querySelector('form button');
-        const feedback  = document.getElementById('feedback');
-        const nextBtn   = document.getElementById('nextBtn');
+      // 1) On load (and on auth‑change), show “already got” if saved:
+      onProgressLoaded(prog => {
+        if (prog[qid] === true) {
+          fb.innerHTML        = "<p style='color:green'>You already got this one!</p>";
+          nextBtn.style.display = "inline-block";
+        }
+      });
 
-        // Submit answer handler
-        document.addEventListener("DOMContentLoaded", () => {
-        const submitBtn = document.querySelector('form button');
-        const feedback  = document.getElementById('feedback');
-        submitBtn.addEventListener('click', async () => {
-            const form   = document.getElementById('questionForm');
-            const choice = form.answer.value;
-            if (!choice) {
-                feedback.innerHTML = '<p style="color:red">Please select an answer.</p>';
-                return;
-            }
-            const isCorrect = choice === 'A';
-            feedback.innerHTML = isCorrect
-                ? "<p style='color:green;'>Correct! 9x² - 25 is a difference of squares where 9x² = (3x)² and 25 = 5², so it factors as (3x - 5)(3x + 5).</p>"
-                : '<p style="color:red">Incorrect. Try again.</p>';
-            if (isCorrect) nextBtn.style.display = 'inline-block';
+      // 2) On submit, grade + persist + show next button:
+      document.getElementById("submitBtn")
+        .addEventListener("click", async () => {
+          const choice   = form.answer.value;
+          if (!choice) {
+            fb.innerHTML = "<p style='color:red'>Please select an answer.</p>";
+            return;
+          }
+          const isCorrect = (choice === "A"); // or "C" on q2.html, etc.
+          await writeProgress(qid, isCorrect);
+          fb.innerHTML = isCorrect
+            ? "<p style='color:green;'>Correct! 9x² - 25 is a difference of squares where 9x² = (3x)² and 25 = 5², so it factors as (3x - 5)(3x + 5).</p>"
+            : "<p style='color:red'>Incorrect. Try again.</p>";
 
-
-        // Inside submit click event:
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                const userRef = doc(db, 'users', user.uid);
-                try {
-                    await updateDoc(userRef, { ['progress.q34Correct']: isCorrect });
-                    console.log("Progress updated successfully");
-                } catch (error) {
-                    console.error("Error updating progress:", error);
-                }
-            } else {
-                console.warn("No user is signed in.");
-            }
-        });
-
-        });
-    });
-
+          if (isCorrect) {
+            nextBtn.style.display = "inline-block";
+          }
+      });
     </script>
     <script>
     // Check login status on page load
@@ -145,10 +121,18 @@
         localStorage.removeItem('token');
         sessionStorage.removeItem('token');
         alert("You have been logged out.");
-        window.location.href = 'Login.html'; // Redirect to Login page
+        window.location.href = '../../Login.html'; // Redirect to Login page
     }
 </script>
-
-
+<!--------JavaScript for Toggle Menu-------->
+<script>
+    var navLinks = document.getElementById("navLinks");
+    function showMenu(){
+        navLinks.style.right = "0";
+    }
+    function hideMenu(){
+        navLinks.style.right = "-200px";
+    }
+</script>
 </body>
 </html>
